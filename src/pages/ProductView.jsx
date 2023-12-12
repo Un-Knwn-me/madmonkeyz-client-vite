@@ -30,12 +30,11 @@ const ProductView = () => {
   // Get productdetails
   const fetchProductDetails = async (id) => {
     try { 
-      const response = await productAPI.productInfo(id);
-      
+      const response = await productAPI.getProductInfo(id);
+
       if (response.status === 200) {
         dispatch(productInfo(response.data));
-      }
-      
+      }      
     } catch (error) {
       console.error("Error fetching products:", error);
       toast.error(error.response.data.message);
@@ -46,8 +45,8 @@ const ProductView = () => {
     fetchProductDetails(id);
   }, [id]);
 
-  const productState = useSelector((state) => state.products);
-  const product = productState.productList.find((item) => item._id === id);
+  // getting product details from state
+  const product = useSelector((state) => state.products.productDetails);
 
     // Set quantity
     const decreaseQuantity = () => {
@@ -80,9 +79,8 @@ const ProductView = () => {
   return (
     <Base>
 
-      {productState.loading ? (
-        <Loader />
-      ) : (
+      {product && product.images ? (
+
         <div>
           {/* navigation */}
           <div className="m-2 md:mx-10 md:m-5">
@@ -369,7 +367,10 @@ const ProductView = () => {
             </div>
           </div>
         </div>
+      ) : (
+        <Loader />
       )}
+
     </Base>
   );
 };

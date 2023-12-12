@@ -4,11 +4,15 @@ import logo from '../assets/madMonkeyz.png';
 import { Link } from 'react-router-dom';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { Box, TextField } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const Base = ({title, description, children}) => {
     const [openNav, setOpenNav] = useState(false);
-    const [search, setSearch] = useState('')
+    const [search, setSearch] = useState('');
+
+    const user = useSelector((state) => state.userInfo.userName);
 
     const navList = (
         <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -58,7 +62,7 @@ const Base = ({title, description, children}) => {
     return (
       <>
       <div className="-mt-1 -ml-1 w-full">
-      <Navbar color="black" className="sticky top-0 z-10 bg-black h-max max-w-full rounded-none px-4 py-0 lg:px-10">
+      <Navbar color="transparent" className="sticky top-0 z-10 bg-black h-max max-w-full rounded-none px-4 py-0 lg:px-10">
         <div className="flex items-center justify-between text-white">
         <div>
             <Link to='/'>
@@ -118,6 +122,11 @@ const Base = ({title, description, children}) => {
         <TextField sx={{ '& .MuiInputBase-input': { color: '#FFFFFF', borderColor: '#FFFFFF' } }} color="warning" label="Search" variant="standard" />
       </Box>
     </div>
+    <div>
+                <Link to='/whislist'>
+              <FavoriteBorderOutlinedIcon />
+              </Link>
+              </div>
               <div>
                 <Link to='/cart'>
               <ShoppingBagOutlinedIcon />
@@ -126,7 +135,7 @@ const Base = ({title, description, children}) => {
               <div className="flex items-center gap-4">
         <Avatar src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar" size="sm" />
         <div>
-          <Typography variant="lead" className='text-base'>userName</Typography>
+          <Typography variant="lead" className='text-base'>{user}</Typography>
         </div>
       </div>
             </div>

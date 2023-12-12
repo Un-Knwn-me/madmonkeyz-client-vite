@@ -19,7 +19,7 @@ const userSlice = createSlice({
       state.hipSize = action.payload.hipSize;
       state.shirtSize = action.payload.shirtSize;
       state.address = action.payload.address;
-      localStorage.setItem("cartItems", JSON.stringify(action.payload.userName));
+      localStorage.setItem("userName", JSON.stringify(action.payload.userName));
     },
     loginFail: () => {},
     logOut: () => {

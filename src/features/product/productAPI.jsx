@@ -14,7 +14,7 @@ const productAPI = {
       return error.response;
     }
   },
-  productInfo: async (productId) => {
+  getProductInfo: async (productId) => {
     try {
       const response = await axios.get(`${Backend_URL}/product/${productId}`, {
         headers: {

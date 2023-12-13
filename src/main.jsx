@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Router>
       <ThemeProvider>
         <App />
-        <ToastContainer autoClose={3000} />
+        <ToastContainer autoClose={2000} />
       </ThemeProvider>
     </Router>
   </Provider>,

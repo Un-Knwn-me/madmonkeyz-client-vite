@@ -12,7 +12,7 @@ import { Accordion, AccordionBody, AccordionHeader, Input, Option, Select } from
 import axios from "axios";
 import { Backend_URL, token } from '../App';
 import cartAPI from '../features/cart/cartAPI';
-import { calculateTotals, getItems, removeItems, updateItems } from '../features/cart/cartSlice';
+import { addNewAdress, calculateTotals, getItems, removeItems, updateItems } from '../features/cart/cartSlice';
 import { toast } from 'react-toastify';
 import Base from '../components/Base';
 
@@ -23,6 +23,7 @@ const Cart = () => {
     const [open, setOpen] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const dispatch = useDispatch()
+    const [openAccord, setOpenAccord] = useState('');
     const [formData, setFormData] = useState({
       name: "",
       phone: "",
@@ -72,7 +73,7 @@ const Cart = () => {
     };
 
     // remove cart item
-    const removeItem = async(productId) => {
+    const handleRemoveItem = async(productId) => {
       try {
         const response = await cartAPI.removeItem(productId);
         
@@ -112,32 +113,21 @@ const Cart = () => {
 const handleSubmitAddress = async (event) => {
     event.preventDefault();
     try {
-      let res = await axios.post(
-        `${Backend_URL}/cart/address`,
-        JSON.stringify(formData),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(res)
-      // setUserAddress(data.user.address)
-      //   toast.success(res.data.message);
+      const response = await cartAPI.addAddress(formData);
+
+      if (response.status === 200) {
+        dispatch(addNewAdress(response.data));
+        toast.success(response.data.message);
+      }
     } catch (error) {
-      //   toast.error(error.response.data.message);
+      console.error("Error adding address:", error);
+      toast.error(error.response.data.message);
     }
   };
-
-  const [openAccord, setOpenAccord] = useState();
  
   const handleOpen = (addressId) => {
     setOpenAccord((prev) => (prev === addressId ? null : addressId));
   };
-
-
-
 
     // stepper
   const handleNext = () => {
@@ -224,7 +214,7 @@ const handleSubmitAddress = async (event) => {
         ) : (
     <div>
       {cartItems?.map((item) => (
-        <CartItemCard item={item} key={item.product._id} removeItem={removeItem} updateCartItem={updateCartItem} />
+        <CartItemCard item={item} key={item.product._id} removeItem={handleRemoveItem} updateCartItem={updateCartItem} />
  ))}
  </div>
 )}
@@ -248,18 +238,24 @@ const handleSubmitAddress = async (event) => {
          onChange={(e) => setDeliveryAddress(e.target.value)} 
        >
         {userAddress.map((address) => (
-         <FormControlLabel value={address._id} control={<BpRadio />} label={<div key={address._id} className='ml-2'>
-        <Accordion open={openAccord === address._id}>
+  <FormControlLabel
+    key={address._id}
+    value={address._id}
+    control={<BpRadio />}
+    label={<div key={address._id} className='ml-2'>
+      <Accordion open={openAccord === address._id}>
         <AccordionHeader className='text-sm' onClick={() => handleOpen(address._id)}>
           {address.name}, {address.building}, {address.street}, {address.landmark}, {address.city}, {address.state}, {address.pincode}
-         <div>ph:- {address.phone}</div>
+          <div>ph:- {address.phone}</div>
         </AccordionHeader>
         <AccordionBody>
-        <Button variant='contained' size="small" sx={{ backgroundColor: '#000000' }}>Deliver Here</Button>
+          <Button variant='contained' size="small" sx={{ backgroundColor: '#000000' }}>Deliver Here</Button>
         </AccordionBody>
       </Accordion>
-      </div>} />
-       ))}
+    </div>}
+  />
+))}
+
        </RadioGroup>
        </FormControl>  
     </div>

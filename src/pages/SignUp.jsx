@@ -10,8 +10,8 @@ import {
   import { Link, useNavigate } from "react-router-dom";
   import VisibilityIcon from "@mui/icons-material/Visibility";
   import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-  import axios from "axios";
-  import { Backend_URL } from '../App';
+import userAPI from "../features/user/userAPI";
+import { toast } from "react-toastify";
   
   const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -55,23 +55,19 @@ import {
       setShowPassword(!showPassword);
     };
   
+    // signup account
     const handleSubmit = async (event) => {
       event.preventDefault();
       try {
-        let res = await axios.post(
-          `${Backend_URL}/users/signup`,
-          JSON.stringify(formData),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log(res);
-        //   toast.success(res.data.message);
-        navigate("/");
+        const response = await userAPI.signupUser(formData);
+
+        if (response.status === 200) {
+          toast.success(response.data.message);
+          navigate("/");
+        } 
       } catch (error) {
-        //   toast.error(error.response.data.message);
+        console.error("Error signing up: ", error);
+        toast.error(error.response.data.message);
       }
     };
   

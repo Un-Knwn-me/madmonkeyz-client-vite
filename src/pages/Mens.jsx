@@ -62,8 +62,8 @@ const fetchProducts = async () => {
       }
     };
 
-useEffect(async() => {
-  await fetchProducts();
+useEffect(() => {
+  fetchProducts();
   fetchCart();
 }, [sortBy]);
 

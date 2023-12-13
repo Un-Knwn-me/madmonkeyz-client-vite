@@ -4,7 +4,11 @@ import { Backend_URL } from '../../App';
 const userAPI = {
   loginUser: async (userData) => {
     try {
-      const response = await axios.post(`${Backend_URL}/users/signin`, userData);
+      const response = await axios.post(`${Backend_URL}/users/signin`, userData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       return response;
     } catch (error) {
       return error.response;
@@ -13,7 +17,11 @@ const userAPI = {
 
   signupUser: async (userData) => {
     try {
-      const response = await axios.post(`${Backend_UR}/signup`, userData);
+      const response = await axios.post(`${Backend_URL}/users/signup`, userData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       return response;
     } catch (error) {
       return error.response;

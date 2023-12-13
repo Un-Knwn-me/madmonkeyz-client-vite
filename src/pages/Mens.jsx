@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import productAPI from "../features/product/productAPI.jsx";
 import { listProducts } from '../features/product/productSlice.jsx';
 import Base from "../components/Base.jsx";
+import cartAPI from "../features/cart/cartAPI.jsx";
+import { calculateTotals, getItems } from "../features/cart/cartSlice.jsx";
 
 const Mens = () => {
   const [category, setCategory] = useState("");
@@ -44,8 +46,25 @@ const fetchProducts = async () => {
   }
 };
 
-useEffect(() => {
-  fetchProducts();
+    // Get cart items
+    const fetchCart = async () => {
+      try { 
+        const response = await cartAPI.getItem();
+        
+        if (response.status === 200) {
+          dispatch(getItems(response.data));
+          dispatch(calculateTotals());
+        }
+        
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        toast.error(error.response.data.message);
+      }
+    };
+
+useEffect(async() => {
+  await fetchProducts();
+  fetchCart();
 }, [sortBy]);
 
 const productlist = useSelector((state) => state.productList);

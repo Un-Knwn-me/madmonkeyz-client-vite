@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Avatar, Button, Collapse, IconButton, Input, Navbar, Typography } from '@material-tailwind/react'
+import { Avatar, Button, Badge, Collapse, IconButton, Input, Navbar, Typography } from '@material-tailwind/react'
 import logo from '../assets/madMonkeyz.png';
 import { Link } from 'react-router-dom';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
@@ -13,6 +13,7 @@ const Base = ({title, description, children}) => {
     const [search, setSearch] = useState('');
 
     const user = useSelector((state) => state.userInfo.userName);
+    const { cartTotalQuantity } = useSelector(state => state.cart);
 
     const navList = (
         <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -128,8 +129,10 @@ const Base = ({title, description, children}) => {
               </Link>
               </div>
               <div>
-                <Link to='/cart'>
-              <ShoppingBagOutlinedIcon />
+                <Link to='/cart'> 
+                <Badge content={cartTotalQuantity} color="cyan-400">
+                <ShoppingBagOutlinedIcon />
+                </Badge>
               </Link>
               </div>
               <div className="flex items-center gap-4">

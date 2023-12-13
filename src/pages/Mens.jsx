@@ -101,7 +101,7 @@ const productlist = useSelector((state) => state.productList);
 
       {/* Content */}
 
-      <div className="flex justify-center antialiased my-10">
+      <div className="flex justify-center antialiased md:mx-10 my-10">
         <p className="text-2xl font-semibold">Apparel for Mens</p>
       </div>
 
@@ -316,7 +316,7 @@ const productlist = useSelector((state) => state.productList);
         </div>
       </Dialog>
 
-      <div className="grid grid-cols-12 gap-6 mx-10">
+      <div className="grid grid-cols-12 gap-4 mt-10 mb-20">
         {/* Left column for filter */}
         <div className="h-fit col-span-3 p-5 hidden md:block">
           <div className="flex justify-between">
@@ -491,7 +491,7 @@ const productlist = useSelector((state) => state.productList);
         </div>
 
         {/* Right column with product listing */}
-        <div className="h-fit mb-20 col-span-12 md:col-span-9">
+        <div className="h-fit mb-20 mx-5 col-span-12 md:col-span-9">
           <div className="flex items-center justify-between mt-5 mb-20">
             <Typography variant="h6" className="mt-5 hidden md:block">
               Mad Monkeyz Premium

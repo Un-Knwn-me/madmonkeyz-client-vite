@@ -138,14 +138,14 @@ const handleSubmitAddress = async (event) => {
 
   return (
     <Base title={'cart'}>
-<div className='bg-gray-200 mb-5'>
+<div className='bg-gray-200 pt-10 pb-20'>
 
   {/* Stepper */}
   
     <div className="grid grid-cols-12 gap-6 mx-5 md:mx-20">
       
     <div className="h-fit col-span-12 py-5 md:col-span-8">
-    <p className='text-md mb-5'>My Bag</p>
+    <p className='text-md font-semibold mb-5'>My Bag</p>
     {/* pincode & delivery selection */}
     <div className="rounded-lg bg-white py-5 px-8 shadow-lg md:flex md:justify-between backdrop-blur-md max-sm:px-8">
       

@@ -98,7 +98,7 @@ const ProductView = () => {
 
       {product && product.images ? (
 
-        <div>
+        <div className="my-5 md:my-10">
           {/* navigation */}
           <div className="m-2 md:mx-10 md:m-5">
             <Breadcrumbs>
@@ -119,7 +119,7 @@ const ProductView = () => {
             </Breadcrumbs>
           </div>
 
-          <div className="mx-10 md:mx-20">
+          <div className="mx-10 mt-10 md:mx-20">
             <div className="mx-auto mt-6 sm:px-6">
               <div className="grid grid-cols-12 gap-6">
                 {/* Left column with product image */}

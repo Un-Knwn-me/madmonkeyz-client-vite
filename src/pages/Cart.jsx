@@ -210,11 +210,11 @@ const handleSubmitAddress = async (event) => {
 <div className='text-md font-semibold mb-5 mt-10'><ShoppingCartIcon /> Items ({cartItems?.length})</div>   
     {/* list */} 
     {cartItems && cartItems?.length === 0 ? (
-          <div className='text-lg'>Your cart is empty.</div>
+          <div className='text-lg my-10'>Your cart is empty.</div>
         ) : (
     <div>
       {cartItems?.map((item) => (
-        <CartItemCard item={item} key={item.product._id} removeItem={handleRemoveItem} updateCartItem={updateCartItem} />
+        <CartItemCard item={item} key={item.product?._id} removeItem={handleRemoveItem} updateCartItem={updateCartItem} />
  ))}
  </div>
 )}

@@ -9,8 +9,6 @@ import { useEffect } from 'react';
 import CartItemCard from '../components/CartItemCard';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Accordion, AccordionBody, AccordionHeader, Input, Option, Select } from '@material-tailwind/react';
-import axios from "axios";
-import { Backend_URL, token } from '../App';
 import cartAPI from '../features/cart/cartAPI';
 import { addNewAdress, calculateTotals, getItems, removeItems, updateItems } from '../features/cart/cartSlice';
 import { toast } from 'react-toastify';
@@ -214,7 +212,7 @@ const handleSubmitAddress = async (event) => {
         ) : (
     <div>
       {cartItems?.map((item) => (
-        <CartItemCard item={item} key={item.product?._id} removeItem={handleRemoveItem} updateCartItem={updateCartItem} />
+        <CartItemCard key={item.product?._id} item={item} removeItem={handleRemoveItem} updateCartItem={updateCartItem} />
  ))}
  </div>
 )}

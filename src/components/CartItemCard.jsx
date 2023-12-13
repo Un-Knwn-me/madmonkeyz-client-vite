@@ -21,11 +21,15 @@ const CartItemCard = ({ item, updateCartItem, removeItem }) => {
       <div className="md:flex p-5">
         {/* item image */}
         <div className="md:shrink-0">
+        {item.product.images && item.product.images.length > 0 ? (
           <img
             className="h-48 w-full rounded-md object-cover md:w-48"
             src={item.product.images[0]}
             alt={item.product.brandName}
           />
+          ) : (
+            <div>No Image</div>
+          )}
         </div>
         {/* item details */}
         <div className="md:flex md:justify-between gap-6 md:px-6 p-2 md:pt-0">

@@ -15,7 +15,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import cartAPI from "../features/cart/cartAPI";
-import { addItems } from "../features/cart/cartSlice";
+import { addItems, calculateTotals, getItems } from "../features/cart/cartSlice";
 import { toast } from "react-toastify";
 import Base from "../components/Base";
 import productAPI from "../features/product/productAPI";
@@ -68,6 +68,7 @@ const ProductView = () => {
       const response = await cartAPI.addItem(product._id, qty, product.salesPrice, product.price);
       if (response.status === 200) {
         dispatch(addItems(response.data));
+        fetchCart();
         toast.success(response.data.message);
       }
     } catch (error) {
@@ -75,6 +76,22 @@ const ProductView = () => {
       toast.error(error.response.data.message);
     }
   };
+
+      // Get cart items
+      const fetchCart = async () => {
+        try { 
+          const response = await cartAPI.getItem();
+          
+          if (response.status === 200) {
+            dispatch(getItems(response.data));
+            dispatch(calculateTotals());
+          }
+          
+        } catch (error) {
+          console.error("Error fetching products:", error);
+          toast.error(error.response.data.message);
+        }
+      };
 
   return (
     <Base>

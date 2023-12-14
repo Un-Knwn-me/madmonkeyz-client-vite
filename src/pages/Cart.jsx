@@ -136,6 +136,22 @@ const handleSubmitAddress = async (event) => {
     setActiveStep((cur) => cur - 1);
   };
 
+  // pincode check
+  const handlePinCheck = async() => {
+    try {
+      const response = await cartAPI.checkPincode(pincode);
+
+      if (response.status === 200) {
+        console.log(response.records)
+        // dispatch(addNewAdress(response.data));
+        // toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error adding address:", error);
+      toast.error(error.response.data.message);
+    }
+  }
+
   return (
     <Base title={'cart'}>
 <div className='bg-gray-200 pt-10 pb-20'>
@@ -177,12 +193,11 @@ const handleSubmitAddress = async (event) => {
 <form>   
 <FormControl sx={{ width: '15ch' }}>
 <TextField
-        required
         id="pincode"
         label="Enter pincode"
         size="small"
         type='number'
-        value={pincode}
+        value={pincode || ''}
         onChange={(e) => setPincode(e.target.value)}
         InputProps={{
           startAdornment: (
@@ -194,7 +209,7 @@ const handleSubmitAddress = async (event) => {
         variant="standard"
       />
       </FormControl>
-      <button type="submit" className="mt-5 ml-2 textblack text-sm leading-6 font-medium px-3 rounded-sm border border-black w-fit">Check</button>
+      <button type="submit" onClick={handlePinCheck} className="mt-5 ml-2 textblack text-sm leading-6 font-medium px-3 rounded-sm border border-black w-fit">Check</button>
 </form>
 
       </div>

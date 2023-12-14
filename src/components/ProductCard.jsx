@@ -8,17 +8,15 @@ import {
   IconButton,
   Typography,
 } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
 import Rating from "./Rating";
 
 const ProductCard = ({ product }) => {
-  const navigate = useNavigate();
 
   return (
     <div className="w-full">
+      
     <Card
       className="overflow-hidden cursor-pointer"
-      onClick={() => navigate(`/men/${product._id}`)}
     >
       <CardHeader
         floated={false}

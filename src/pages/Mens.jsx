@@ -13,6 +13,7 @@ import { listProducts } from '../features/product/productSlice.jsx';
 import Base from "../components/Base.jsx";
 import cartAPI from "../features/cart/cartAPI.jsx";
 import { calculateTotals, getItems } from "../features/cart/cartSlice.jsx";
+import { Link } from "react-router-dom";
 
 const Mens = () => {
   const [category, setCategory] = useState("");
@@ -558,7 +559,9 @@ const productlist = useSelector((state) => state.productList);
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto">
               {filteredProducts.map((product, key) => (
+                <Link to={`/men/${product._id}`}>
                 <ProductCard product={product} key={product._id} />
+                </Link>
               ))}
             </div>
           )}

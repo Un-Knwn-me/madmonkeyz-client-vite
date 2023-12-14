@@ -229,7 +229,7 @@ import { toast } from "react-toastify";
                           color="blue-gray"
                           className="mb-2 font-medium"
                         >
-                          Shirt size
+                          Shirt size <span className="text-red-600">*</span>
                         </Typography>
                         <Select
                           placeholder="Select Size"
@@ -276,7 +276,7 @@ import { toast } from "react-toastify";
                           color="blue-gray"
                           className="mb-2 font-medium"
                         >
-                          Hip size
+                          Hip size <span className="text-red-600">*</span>
                         </Typography>
                         <Select
                           required
@@ -321,7 +321,6 @@ import { toast } from "react-toastify";
                     </Typography>
                     <div className="relative mt-1">
                       <Input
-                        required
                         type="number"
                         id="height"
                         name="height"
@@ -344,7 +343,6 @@ import { toast } from "react-toastify";
                     </Typography>
                     <div className="relative">
                       <Input
-                        required
                         type="number"
                         id="weight"
                         name="weight"

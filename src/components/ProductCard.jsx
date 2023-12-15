@@ -54,24 +54,19 @@ const ProductCard = ({ product }) => {
           </Typography>
           
         </div>
+        <div className="mb-2 flex items-center justify-between">
         <div className="mb-2 flex items-center justify-start">
-          <div className="w-[20px] h-5 px-4 text-black rounded border border-black flex-col justify-center items-center inline-flex">
-            <div className="text-black text-xl font-medium font-['Red Hat Display'] leading-10 tracking-tight">
-              {product.size}
-            </div>
-          </div>
+          <Rating value={product.ratings} text={`${product.numOfReviews} reviews`} />
+        </div>
           <Typography
             variant="small"
             color="gray"
-            className="ml-2 font-normal opacity-75"
+            className="ml-2 font-normal opacity-90 justify-end"
           >
             {product.color}
           </Typography>
         </div>
-        <div className="mb-2 flex items-center justify-start">
-          <Rating value={product.ratings} text={`${product.numOfReviews} reviews`} />
-        </div>
-        <div className="mb-2 flex items-center justify-start">
+        <div className="mb-2 flex items-center justify-between">
           <Typography color="blue-gray" className="font-medium">
             Rs. {product.salesPrice}
           </Typography>
@@ -86,7 +81,7 @@ const ProductCard = ({ product }) => {
           fullWidth={true}
           className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
         >
-          Add to Cart
+          View Product
         </Button>
       </CardFooter>
     </Card>

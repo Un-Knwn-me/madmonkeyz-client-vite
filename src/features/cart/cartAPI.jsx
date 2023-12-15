@@ -2,9 +2,9 @@ import { Backend_URL, token } from "../../App";
 import axios from "axios"
 
 const cartAPI = {
-  addItem: async (productId, quantity, salesPrice, price) => {
+  addItem: async (productId, quantity, salesPrice, price, varientId, selectedSize) => {
     try {
-      const response = await axios.post(`${Backend_URL}/cart/addToCart`, {productId, quantity, salesPrice, price}, {
+      const response = await axios.post(`${Backend_URL}/cart/addToCart`, {productId, quantity, salesPrice, price, varientId, selectedSize}, {
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,

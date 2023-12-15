@@ -16,12 +16,14 @@ const CartItemCard = ({ item, updateCartItem, removeItem }) => {
     }
   };
 
+  console.log("brand name: ", item.product.brandName)
+
   return (
     <div className="max-w-md mx-auto bg-white rounded-md backdrop-blur-md shadow-md mb-10 md:my-3 overflow-hidden md:max-w-full">
       <div className="md:flex p-5">
         {/* item image */}
         <div className="md:shrink-0">
-        {item.product.images && item.product.images.length > 0 ? (
+        {item.product && item.product.images && item.product.images.length > 0 ? (
           <img
             className="h-48 w-full rounded-md object-cover md:w-48"
             src={item.product.images[0]}
@@ -46,7 +48,7 @@ const CartItemCard = ({ item, updateCartItem, removeItem }) => {
             </div>
             <div className="text-sm font-semibold mt-2">
               Size:{" "}
-              <span className="text-sm font-normal">{item.product.size}</span>
+              <span className="text-sm font-normal">{item.selectedSize}</span>
             </div>
 
             {/* Quantity dropdown */}
@@ -66,7 +68,7 @@ const CartItemCard = ({ item, updateCartItem, removeItem }) => {
                       autoWidth
                     >
                       {/* [...Array] - it creates the new array equals to (item.product.stock), _ - it denotes no values*/}
-                      {[...Array(item.product.stock)].map((_, index) => (
+                      {[...Array(item.varient.stock)].map((_, index) => (
                         <MenuItem key={index + 1} value={index + 1}>
                           {index + 1}
                         </MenuItem>

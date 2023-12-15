@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Breadcrumbs,
   Button,
   Carousel,
   Chip,
+  Tab,
+  TabPanel,
+  Tabs,
+  TabsBody,
+  TabsHeader,
   Tooltip,
   Typography,
 } from "@material-tailwind/react";
@@ -25,7 +30,8 @@ const ProductView = () => {
   const { id } = useParams();
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [selectedVariant, setSelectedVariant] = useState(null);
+  const [selectedSize, setSelectedSize] = useState('');
 
   // Get productdetails
   const fetchProductDetails = async (id) => {
@@ -55,8 +61,9 @@ const ProductView = () => {
       }
     };
   
-    const increaseQuantity = () => {
-      if (qty < product.stock) {
+    const increaseQuantity = (variantId) => {
+      const variant = product.varients.find((e) => e._id === variantId);
+      if (qty < variant.stock) {
       setQty(qty + 1);
       }
     };
@@ -65,7 +72,7 @@ const ProductView = () => {
   const handleAddToCart = async (e) => {
       e.preventDefault();
     try {
-      const response = await cartAPI.addItem(product._id, qty, product.salesPrice, product.price);
+      const response = await cartAPI.addItem(product._id, qty, product.salesPrice, product.price, selectedVariant, selectedSize);
       if (response.status === 200) {
         dispatch(addItems(response.data));
         fetchCart();
@@ -186,7 +193,7 @@ const ProductView = () => {
                   <div className="m-5">
                     <div className="flex items-center justify-between">
                       <h3 className="text-md font-medium text-gray-900">
-                        Size:
+                        Select Size:
                       </h3>
                       <Link
                         to="#"
@@ -195,33 +202,43 @@ const ProductView = () => {
                         Size guide
                       </Link>
                     </div>
-                    <div className="w-[50px] mt-3 h-10 px-4 bg-black rounded border border-black flex-col justify-center items-center inline-flex">
-                      <div className="text-white text-xl font-medium font-['Red Hat Display'] leading-10 tracking-tight">
-                        {product.size}
-                      </div>
-                    </div>
-                  </div>
+                    
+                  
 
-                  {/* status */}
-                  <div className="mt-8 mx-5">
+                  <Tabs className="mt-3" value=''>
+      <TabsHeader>
+        {product.varients.map(({ size, _id }) => (
+          <Tab key={_id} value={_id} onClick={() => {
+            setSelectedVariant(_id);
+            setSelectedSize(size);
+          }} >
+            {size}
+          </Tab>
+        ))}
+      </TabsHeader>
+      <TabsBody>
+        {product.varients.map((variant) => (
+          <TabPanel key={variant._id} value={variant._id}>
+            {/* status */}
+            <div className="mt-8 mx-5">
                     <div className="flex items-center justify-start">
                       <h3 className="text-md font-medium text-gray-900">
-                        Status:
+                        Status: 
                       </h3>
                       <div className="inline-block ml-3">
                         <Chip
                           variant="gradient"
-                          color={product.stock > 0 ? "green" : "red"}
+                          color={variant.stock > 0 ? "green" : "red"}
                           value={
-                            product.stock > 0 ? "In Stock" : "Out of Stock"
+                            variant.stock > 0 ? `${variant.stock} qty In Stock` : "Out of Stock"
                           }
                         />
                       </div>
                     </div>
                   </div>
 
-                  {/* Quantity */}
-                  <div className="mt-8 mx-5">
+             {/* Quantity */}
+             <div className="mt-8 mx-5">
                     <div className="flex items-center justify-start">
                       <h3 className="text-md font-medium text-gray-900">
                         Quantity:
@@ -230,7 +247,7 @@ const ProductView = () => {
                     <div className="flex items-center m-3 space-x-4">
                       <Button
                         size="sm"
-                        onClick={() => decreaseQuantity(product._id)}
+                        onClick={() => decreaseQuantity()}
                         className="px-2 py-1 bg-gray-200 text-gray-900 rounded"
                       >
                         <RemoveIcon />
@@ -238,13 +255,19 @@ const ProductView = () => {
                       <span>{qty}</span>
                       <Button
                         size="sm"
-                        onClick={() => increaseQuantity(product._id)}
+                        onClick={() => increaseQuantity(variant._id)}
                         className="px-2 py-1 bg-gray-200 text-gray-900 rounded"
                       >
                         <AddIcon />
                       </Button>
                     </div>
                   </div>
+          </TabPanel>
+        ))}
+      </TabsBody>
+    </Tabs>
+
+    </div>
 
                   <p className="font-light text-xs mt-10 text-gray-600 text-center">
                     2days return & replace policy applicable to this product

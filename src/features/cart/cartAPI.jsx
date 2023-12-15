@@ -27,9 +27,9 @@ const cartAPI = {
       return error.response;
     }
   },
-  updateItem: async (productId, quantity) => {
+  updateItem: async (cartId, quantity) => {
     try {
-      const response = await axios.put(`${Backend_URL}/cart/changeQuantity`, {productId, quantity}, {
+      const response = await axios.put(`${Backend_URL}/cart/changeQuantity`, {cartId, quantity}, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -40,9 +40,9 @@ const cartAPI = {
       return error.response;
     }
   },
-  removeItem: async (productId) => {
+  removeItem: async (cartId) => {
     try {
-      const response = await axios.delete(`${Backend_URL}/cart/removecart/${productId}`, {
+      const response = await axios.delete(`${Backend_URL}/cart/removecart/${cartId}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

@@ -7,16 +7,14 @@ const CartItemCard = ({ item, updateCartItem, removeItem }) => {
   const handleChange = (event) => {
     const newQuantity = parseInt(event.target.value, 10);
 
-    if (newQuantity <= item.product.stock) {
+    if (newQuantity <= item.varient.stock) {
       setQuantity(newQuantity);
 
-      updateCartItem(item.product._id, newQuantity);
+      updateCartItem(item._id, newQuantity);
     } else {
       console.log("Quantity exceeds stock");
     }
   };
-
-  console.log("brand name: ", item.product.brandName)
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-md backdrop-blur-md shadow-md mb-10 md:my-3 overflow-hidden md:max-w-full">
@@ -37,7 +35,7 @@ const CartItemCard = ({ item, updateCartItem, removeItem }) => {
         <div className="md:flex md:justify-between gap-6 md:px-6 p-2 md:pt-0">
           <div className="">
             <div className="text-base">
-              {item.product.brandName} - {item.product.productName}
+              {item.product?.brandName} - {item.product.productName}
             </div>
             <div className="text-xs text-gray-700">
               {item.product.productType} - {item.product.category}
@@ -102,7 +100,7 @@ const CartItemCard = ({ item, updateCartItem, removeItem }) => {
         <Button
           variant="text"
           sx={{ color: "#000000" }}
-          onClick={() => removeItem(item.product._id)}
+          onClick={() => removeItem(item._id)}
         >
           Remove
         </Button>

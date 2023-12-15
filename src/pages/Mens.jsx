@@ -559,8 +559,8 @@ const productlist = useSelector((state) => state.productList);
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto">
               {filteredProducts.map((product, key) => (
-                <Link to={`/men/${product._id}`}>
-                <ProductCard product={product} key={product._id} />
+                <Link to={`/men/${product._id}`} key={product._id} >
+                <ProductCard product={product} />
                 </Link>
               ))}
             </div>

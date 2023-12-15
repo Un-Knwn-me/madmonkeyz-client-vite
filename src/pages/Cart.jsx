@@ -56,9 +56,9 @@ const Cart = () => {
     const { cartItems, userAddress, subtotal, totalSaving } = useSelector(state => state.cart);
 
     // Update cart item quantity
-    const updateCartItem = async(productId, newQuantity) => {
+    const updateCartItem = async(cartId, newQuantity) => {
       try {
-        const response = await cartAPI.updateItem(productId, newQuantity);
+        const response = await cartAPI.updateItem(cartId, newQuantity);
         
         if (response.status === 200) {
           dispatch(updateItems(response.data));
@@ -71,9 +71,9 @@ const Cart = () => {
     };
 
     // remove cart item
-    const handleRemoveItem = async(productId) => {
+    const handleRemoveItem = async(cartId) => {
       try {
-        const response = await cartAPI.removeItem(productId);
+        const response = await cartAPI.removeItem(cartId);
         
         if (response.status === 200) {
           dispatch(removeItems(response.data));
@@ -227,7 +227,7 @@ const handleSubmitAddress = async (event) => {
         ) : (
     <div>
       {cartItems?.map((item) => (
-        <CartItemCard key={item.product?._id} item={item} removeItem={handleRemoveItem} updateCartItem={updateCartItem} />
+        <CartItemCard key={item._id} item={item} removeItem={handleRemoveItem} updateCartItem={updateCartItem} />
  ))}
  </div>
 )}

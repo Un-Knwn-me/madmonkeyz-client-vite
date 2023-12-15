@@ -32,6 +32,7 @@ const ProductView = () => {
   const dispatch = useDispatch();
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedSize, setSelectedSize] = useState('');
+  const [bag, setBag] = useState(0);
 
   // Get productdetails
   const fetchProductDetails = async (id) => {
@@ -207,10 +208,12 @@ const ProductView = () => {
 
                   <Tabs className="mt-3" value=''>
       <TabsHeader>
-        {product.varients.map(({ size, _id }) => (
+        {product.varients.map(({ size, stock, _id }) => (
           <Tab key={_id} value={_id} onClick={() => {
             setSelectedVariant(_id);
             setSelectedSize(size);
+            setQty(1);
+            setBag(stock);
           }} >
             {size}
           </Tab>
@@ -230,7 +233,7 @@ const ProductView = () => {
                           variant="gradient"
                           color={variant.stock > 0 ? "green" : "red"}
                           value={
-                            variant.stock > 0 ? `${variant.stock} qty In Stock` : "Out of Stock"
+                            variant.stock > 0 ? `In Stock` : "Out of Stock"
                           }
                         />
                       </div>
@@ -238,6 +241,7 @@ const ProductView = () => {
                   </div>
 
              {/* Quantity */}
+             {variant.stock > 0 ? 
              <div className="mt-8 mx-5">
                     <div className="flex items-center justify-start">
                       <h3 className="text-md font-medium text-gray-900">
@@ -262,6 +266,7 @@ const ProductView = () => {
                       </Button>
                     </div>
                   </div>
+                  : " " }
           </TabPanel>
         ))}
       </TabsBody>
@@ -289,7 +294,7 @@ const ProductView = () => {
                       <Button
                         onClick={handleAddToCart}
                         type="button"
-                        disabled={product.stock === 0}
+                        disabled={bag === 0}
                         className="flex w-full items-center justify-center rounded-md border border-transparent bg-gray-900 px-8 py-3 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                       >
                         Add to bag

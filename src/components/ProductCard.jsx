@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import Rating from "./Rating";
+import CalculateOfferPercentage from "./CalculateOfferPercentage";
 
 const ProductCard = ({ product }) => {
 
@@ -72,6 +73,9 @@ const ProductCard = ({ product }) => {
           </Typography>
           <Typography className="ml-2 font-light text-slate-400 line-through">
             Rs. {product.price}
+          </Typography>
+          <Typography className="ml-2 font-normal text-red-600">
+            <CalculateOfferPercentage originalPrice={product.price} discountedPrice={product.salesPrice}/>% off
           </Typography>
         </div>
       </CardBody>

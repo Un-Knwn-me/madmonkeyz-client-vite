@@ -13,6 +13,9 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
+        clearCart: (state) => {
+            state.cartItems = [];
+        },
         getItems: (state, action) => {
             state.loading = false;
             state.cartItems = action.payload.cart;

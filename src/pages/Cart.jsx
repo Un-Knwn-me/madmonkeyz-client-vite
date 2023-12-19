@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, InputAdornment, RadioGroup, TextField, Typography } from '@mui/material';
 import BpRadio from '../components/SizeCheckBox';
@@ -13,6 +13,8 @@ import cartAPI from '../features/cart/cartAPI';
 import { addNewAdress, calculateTotals, getItems, removeItems, updateItems } from '../features/cart/cartSlice';
 import { toast } from 'react-toastify';
 import Base from '../components/Base';
+import orderAPI from '../features/order/orderAPI';
+import { createOrder } from '../features/order/orderSlice';
 
 const Cart = () => {
     const [shipping, setShipping] = useState('Standard Delivery');
@@ -21,6 +23,7 @@ const Cart = () => {
     const [open, setOpen] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const dispatch = useDispatch()
+    const navigate = useNavigate();
     const [openAccord, setOpenAccord] = useState('');
     const [formData, setFormData] = useState({
       name: "",
@@ -32,7 +35,7 @@ const Cart = () => {
       state: "",
       pincode: ''
     });
-    
+
     // Get cart items
     const fetchCart = async () => {
       try { 
@@ -53,7 +56,7 @@ const Cart = () => {
       fetchCart();
     }, []);
 
-    const { cartItems, userAddress, subtotal, totalSaving } = useSelector(state => state.cart);
+    const { cartItems, userAddress, subtotal, cartTotalQuantity, totalSaving } = useSelector(state => state.cart);
 
     // Update cart item quantity
     const updateCartItem = async(cartId, newQuantity) => {
@@ -151,6 +154,53 @@ const handleSubmitAddress = async (event) => {
       toast.error(error.response.data.message);
     }
   }
+
+  // handleCheckout
+  const handleCheckout = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await orderAPI.newOrder(deliveryAddress, cartTotalQuantity, subtotal);
+
+      if (response.status === 200) {
+        dispatch(createOrder(response.data));
+        toast.info(response.data.message)
+        navigate(`/payment/${response.data.orderId}`)
+      }
+    } catch (error) {
+      console.error("Error checking out:", error);
+      toast.error(error.response.data.message);
+    }
+  };
+  
+
+//   const handleCheckout = async(deliveryAddress) => {
+//     try {
+//       console.log('working', deliveryAddress);
+//       // const response = await orderAPI.newOrder(deliveryAddress);
+
+//       // if (response.status === 200) {
+//       //   dispatch(createOrder(response.data));
+//       // }
+//     } catch (error) {
+//       console.error("Error checkingout:", error);
+//       // toast.error(error.response.data.message);
+//     }
+//   //   const data = await axios.post(serverBaseUrl + '/order',
+//   //    {
+//   //     amount: subtotal + 40,
+//   //     keyId: import.meta.env.VITE_RAZORPAY_KEY_ID,
+//   //     KeySecret: import.meta.env.VITE_RAZORPAY_KEY_SECRET,
+//   //    }
+//   //   );
+  
+//   //   if(data && data.order_id){
+//   //     setOrderDetails({
+//   //       orderId: data.order_id,
+//   //       amount: data.amount,
+//   //     });
+//   //     setDisplayRazorpay(true);
+//   // }
+// }
 
   return (
     <Base title={'cart'}>
@@ -542,7 +592,11 @@ const handleSubmitAddress = async (event) => {
       {/* Proceed payment */}
       <div>
       {activeStep === 1 && (
-      <button type="submit" className="mt-6 bg-black text-white text-sm leading-6 font-medium py-2 px-3 rounded-md w-full">Proceed Payment</button>
+      <button type="button" onClick={handleCheckout} className={`mt-6 w-full py-2 px-3 rounded-md text-sm leading-6 font-medium ${
+        !deliveryAddress || Object.keys(deliveryAddress).length === 0
+          ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+          : 'bg-black text-white hover:bg-gray-800 hover:text-white'
+      }`}>Proceed Payment</button>
       )}
       </div>
 

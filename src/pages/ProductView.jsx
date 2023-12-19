@@ -25,6 +25,7 @@ import { toast } from "react-toastify";
 import Base from "../components/Base";
 import productAPI from "../features/product/productAPI";
 import { productInfo } from "../features/product/productSlice";
+import CalculateOfferPercentage from "../components/CalculateOfferPercentage";
 
 const ProductView = () => {
   const { id } = useParams();
@@ -173,6 +174,9 @@ const ProductView = () => {
                       ₹ {product.salesPrice}{" "}
                       <span className="text-xl mx-3 line-through font-medium text-gray-500">
                         ₹ {product.price}
+                      </span>
+                      <span className="text-red-600">
+                      <CalculateOfferPercentage originalPrice={product.price} discountedPrice={product.salesPrice}/>% off
                       </span>
                     </h1>
                     <p className="font-light text-xs text-gray-600">

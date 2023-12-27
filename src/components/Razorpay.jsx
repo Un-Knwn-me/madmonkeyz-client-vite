@@ -78,6 +78,7 @@ const Razorpay = ({ orderId, keyId, keySecret, currency, amount }) => {
       console.log('succeeded');
       console.log(response);
       paymentId.current = response.razorpay_payment_id;
+      console.log(paymentId.current)
 
       // Most important step to capture and authorize the payment. This can be done of Backend server.
       const succeeded = crypto.HmacSHA256(`${orderId}|${response.razorpay_payment_id}`, keySecret).toString() === response.razorpay_signature;

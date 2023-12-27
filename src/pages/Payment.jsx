@@ -33,11 +33,6 @@ const Checkout = () => {
 
   return (
     <div>
-         <button 
-      onClick={() => setDisplayRazorpay(true)}
-    >Place Order
-    </button>
-         <div>
       {displayRazorpay && (
         <Razorpay
           amount={amount}
@@ -47,7 +42,6 @@ const Checkout = () => {
           keySecret={import.meta.env.VITE_RAZORPAY_KEY_SECRET}
         />
       )}
-    </div>
     </div>
   );
 };

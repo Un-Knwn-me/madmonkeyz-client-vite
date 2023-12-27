@@ -27,6 +27,31 @@ import productAPI from "../features/product/productAPI";
 import { productInfo } from "../features/product/productSlice";
 import CalculateOfferPercentage from "../components/CalculateOfferPercentage";
 
+
+const theme = {
+  tabsHeader: {
+    defaultProps: {
+      className: "",
+    },
+    styles: {
+      base: {
+        display: "flex",
+        position: "relative",
+        bg: "bg-blue-gray-50",
+        bgOpacity: "bg-opacity-60",
+        borderRadius: "rounded-lg",
+        p: "p-1",
+      },
+      horizontal: {
+        flexDirection: "flex-row",
+      },
+      vertical: {
+        flexDirection: "flex-col",
+      },
+    },
+  },
+};
+
 const ProductView = () => {
   const { id } = useParams();
   const [qty, setQty] = useState(1);
@@ -211,7 +236,7 @@ const ProductView = () => {
                   
 
                   <Tabs className="mt-3" value=''>
-      <TabsHeader>
+      <TabsHeader theme={theme}>
         {product.varients.map(({ size, stock, _id }) => (
           <Tab key={_id} value={_id} onClick={() => {
             setSelectedVariant(_id);

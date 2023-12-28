@@ -342,17 +342,10 @@ const ProductView = () => {
                     </Typography>
 
                     <Typography className="m-5" variant="h6">
-                      Product Details:
+                      Notes:
                     </Typography>
                     <Typography className="mx-5 -mt-3" variant="small">
                       {product.notes}
-                    </Typography>
-
-                    <Typography className="m-5" variant="h6">
-                      Size & Fit:
-                    </Typography>
-                    <Typography className="mx-5 -mt-3" variant="small">
-                      {product.style}
                     </Typography>
 
                     <Typography className="m-5" variant="h6">
@@ -421,7 +414,7 @@ const ProductView = () => {
                           Category
                         </Typography>
                         <Typography className="mx-5 mt-1" variant="small">
-                          {product.category} Regular Fit
+                          {product.category}
                         </Typography>
 
                         <Typography

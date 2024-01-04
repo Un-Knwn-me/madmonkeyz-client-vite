@@ -104,6 +104,8 @@ const ProductView = () => {
         dispatch(addItems(response.data));
         fetchCart();
         toast.success(response.data.message);
+      } else {
+        toast.warning(response.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -236,70 +238,70 @@ const ProductView = () => {
                   
 
                   <Tabs className="mt-3" value=''>
-      <TabsHeader theme={theme}>
-        {product.varients.map(({ size, stock, _id }) => (
-          <Tab key={_id} value={_id} onClick={() => {
-            setSelectedVariant(_id);
-            setSelectedSize(size);
-            setQty(1);
-            setBag(stock);
-          }} >
-            {size}
-          </Tab>
-        ))}
-      </TabsHeader>
-      <TabsBody>
-        {product.varients.map((variant) => (
-          <TabPanel key={variant._id} value={variant._id}>
-            {/* status */}
-            <div className="mt-8 mx-5">
-                    <div className="flex items-center justify-start">
-                      <h3 className="text-md font-medium text-gray-900">
-                        Status: 
-                      </h3>
-                      <div className="inline-block ml-3">
-                        <Chip
-                          variant="gradient"
-                          color={variant.stock > 0 ? "green" : "red"}
-                          value={
-                            variant.stock > 0 ? `In Stock` : "Out of Stock"
-                          }
-                        />
-                      </div>
-                    </div>
-                  </div>
+                    <TabsHeader theme={theme}>
+                      {product.varients.map(({ size, stock, _id }) => (
+                        <Tab key={_id} value={_id} onClick={() => {
+                          setSelectedVariant(_id);
+                          setSelectedSize(size);
+                          setQty(1);
+                          setBag(stock);
+                        }} >
+                          {size}
+                        </Tab>
+                      ))}
+                    </TabsHeader>
+                    <TabsBody>
+                      {product.varients.map((variant) => (
+                        <TabPanel key={variant._id} value={variant._id}>
+                          {/* status */}
+                          <div className="mt-8 mx-5">
+                                  <div className="flex items-center justify-start">
+                                    <h3 className="text-md font-medium text-gray-900">
+                                      Status: 
+                                    </h3>
+                                    <div className="inline-block ml-3">
+                                      <Chip
+                                        variant="gradient"
+                                        color={variant.stock > 0 ? "green" : "red"}
+                                        value={
+                                          variant.stock > 0 ? `In Stock` : "Out of Stock"
+                                        }
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
 
-             {/* Quantity */}
-             {variant.stock > 0 ? 
-             <div className="mt-8 mx-5">
-                    <div className="flex items-center justify-start">
-                      <h3 className="text-md font-medium text-gray-900">
-                        Quantity:
-                      </h3>
-                    </div>
-                    <div className="flex items-center m-3 space-x-4">
-                      <Button
-                        size="sm"
-                        onClick={() => decreaseQuantity()}
-                        className="px-2 py-1 bg-gray-200 text-gray-900 rounded"
-                      >
-                        <RemoveIcon />
-                      </Button>
-                      <span>{qty}</span>
-                      <Button
-                        size="sm"
-                        onClick={() => increaseQuantity(variant._id)}
-                        className="px-2 py-1 bg-gray-200 text-gray-900 rounded"
-                      >
-                        <AddIcon />
-                      </Button>
-                    </div>
-                  </div>
-                  : " " }
-          </TabPanel>
-        ))}
-      </TabsBody>
-    </Tabs>
+                            {/* Quantity */}
+                            {variant.stock > 0 ? 
+                            <div className="mt-8 mx-5">
+                                  <div className="flex items-center justify-start">
+                                    <h3 className="text-md font-medium text-gray-900">
+                                      Quantity:
+                                    </h3>
+                                  </div>
+                                  <div className="flex items-center m-3 space-x-4">
+                                    <Button
+                                      size="sm"
+                                      onClick={() => decreaseQuantity()}
+                                      className="px-2 py-1 bg-gray-200 text-gray-900 rounded"
+                                    >
+                                      <RemoveIcon />
+                                    </Button>
+                                    <span>{qty}</span>
+                                    <Button
+                                      size="sm"
+                                      onClick={() => increaseQuantity(variant._id)}
+                                      className="px-2 py-1 bg-gray-200 text-gray-900 rounded"
+                                    >
+                                      <AddIcon />
+                                    </Button>
+                                  </div>
+                                </div>
+                                : " " }
+                        </TabPanel>
+                      ))}
+                    </TabsBody>
+                  </Tabs>
 
     </div>
 

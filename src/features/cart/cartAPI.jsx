@@ -55,7 +55,7 @@ const cartAPI = {
   },
   addAddress: async (formData) => {
     try {
-      const response = await axios.delete(`${Backend_URL}/cart/addAddress`, {formData}, {
+      const response = await axios.post(`${Backend_URL}/cart/addAddress`, {formData}, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

@@ -35,7 +35,9 @@ const Login = () => {
           dispatch(loggedIn(response.data));
           toast.success(response.data.message);
           navigate("/men");
-        } 
+        } else {
+          toast.warning(response.data.message);
+        }
     } catch (error) {
       console.error(error);
       toast.error(error.response.data.message);

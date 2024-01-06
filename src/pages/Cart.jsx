@@ -25,6 +25,8 @@ const Cart = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const [openAccord, setOpenAccord] = useState('');
+    const [deliveryStatus, setDeliveryStatus] = useState(null);
+    const [shippingCharge, setShippingCharge] = useState(0);
     const [formData, setFormData] = useState({
       name: "",
       phone: "",
@@ -54,7 +56,8 @@ const Cart = () => {
 
     useEffect(() => {
       fetchCart();
-    }, []);
+      confirmAddress();
+    }, [deliveryAddress]);
 
     const { cartItems, userAddress, subtotal, cartTotalQuantity, totalSaving } = useSelector(state => state.cart);
 
@@ -119,6 +122,8 @@ const handleSubmitAddress = async (event) => {
       if (response.status === 200) {
         dispatch(addNewAdress(response.data));
         toast.success(response.data.message);
+      }else {
+        toast.warning(response.data.message);
       }
     } catch (error) {
       console.error("Error adding address:", error);
@@ -133,6 +138,7 @@ const handleSubmitAddress = async (event) => {
     // stepper
   const handleNext = () => {
     setActiveStep((cur) => cur + 1);
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth' });
   };
 
   const handlePrev = () => {
@@ -144,14 +150,15 @@ const handleSubmitAddress = async (event) => {
     try {
       const response = await cartAPI.checkPincode(pincode);
 
-      if (response.status === 200) {
-        console.log(response.records)
-        // dispatch(addNewAdress(response.data));
-        // toast.success(response.data.message);
-      }
+      if (response.data.records.length > 0) {
+        const records = response.data.records;
+        const hasDelivery = await records.some(record => record.deliverystatus === "Delivery");    
+        setDeliveryStatus(hasDelivery);
+       } else {
+        setDeliveryStatus(false)
+       }
     } catch (error) {
       console.error("Error adding address:", error);
-      toast.error(error.response.data.message);
     }
   }
 
@@ -159,7 +166,7 @@ const handleSubmitAddress = async (event) => {
   const handleCheckout = async (event) => {
     event.preventDefault();
     try {
-      const response = await orderAPI.newOrder(deliveryAddress, cartTotalQuantity, subtotal);
+      const response = await orderAPI.newOrder(deliveryAddress, cartTotalQuantity, subtotal, shippingCharge);
 
       if (response.status === 200) {
         dispatch(createOrder(response.data));
@@ -171,36 +178,41 @@ const handleSubmitAddress = async (event) => {
       toast.error(error.response.data.message);
     }
   };
-  
 
-//   const handleCheckout = async(deliveryAddress) => {
-//     try {
-//       console.log('working', deliveryAddress);
-//       // const response = await orderAPI.newOrder(deliveryAddress);
+  const confirmAddress = async() => {
+    try {
+      const res = await cartAPI.checkAddress(deliveryAddress);
 
-//       // if (response.status === 200) {
-//       //   dispatch(createOrder(response.data));
-//       // }
-//     } catch (error) {
-//       console.error("Error checkingout:", error);
-//       // toast.error(error.response.data.message);
-//     }
-//   //   const data = await axios.post(serverBaseUrl + '/order',
-//   //    {
-//   //     amount: subtotal + 40,
-//   //     keyId: import.meta.env.VITE_RAZORPAY_KEY_ID,
-//   //     KeySecret: import.meta.env.VITE_RAZORPAY_KEY_SECRET,
-//   //    }
-//   //   );
-  
-//   //   if(data && data.order_id){
-//   //     setOrderDetails({
-//   //       orderId: data.order_id,
-//   //       amount: data.amount,
-//   //     });
-//   //     setDisplayRazorpay(true);
-//   // }
-// }
+      const pin = res.data.address.pincode;
+      const response = await cartAPI.checkPincode(pin);
+
+      if (response.data.records.length > 0) {
+        const state = response.data.records[0].statename;
+        if(state === "TAMIL NADU"){
+          setShippingCharge(40)
+        } else if(state === "PONDICHERRY"){
+          setShippingCharge(50)
+        } else if(state === "KARNATAKA" || state === "ANDHRA PRADESH" || state === "KERALA"){
+          setShippingCharge(70)
+        } else {
+          setShippingCharge(100)
+      }
+      }
+    } catch (error) {
+      
+    }
+  }
+
+  // set delivery address
+  const handleAddress = (event) => {
+    try {
+      setDeliveryAddress(event.target.value);
+
+    } catch (error) {
+      console.error("Error checking out:", error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   return (
     <Base title={'cart'}>
@@ -240,7 +252,7 @@ const handleSubmitAddress = async (event) => {
      
       <div>
         
-<form>   
+<div>   
 <FormControl sx={{ width: '15ch' }}>
 <TextField
         id="pincode"
@@ -259,8 +271,18 @@ const handleSubmitAddress = async (event) => {
         variant="standard"
       />
       </FormControl>
-      <button type="submit" onClick={handlePinCheck} className="mt-5 ml-2 textblack text-sm leading-6 font-medium px-3 rounded-sm border border-black w-fit">Check</button>
-</form>
+      <button type="button" onClick={handlePinCheck} className="mt-5 ml-2 textblack text-sm leading-6 font-medium px-3 rounded-sm border border-black w-fit">Check</button>
+{/* Deleviery status */}
+{deliveryStatus !== null && (
+        <div className="mt-2">
+          {deliveryStatus ? (
+            <p className="text-green-600 text-sm">Delivery available</p>
+          ) : (
+            <p className="text-red-600 text-sm">Delivery unavailable</p>
+          )}
+        </div>
+      )}
+</div>
 
       </div>
       
@@ -298,7 +320,7 @@ const handleSubmitAddress = async (event) => {
          aria-labelledby="demo-row-radio-buttons-group-label"
          name="row-radio-buttons-group"
          value={deliveryAddress}
-         onChange={(e) => setDeliveryAddress(e.target.value)} 
+         onChange={handleAddress}
        >
         {userAddress.map((address) => (
   <FormControlLabel
@@ -550,7 +572,7 @@ const handleSubmitAddress = async (event) => {
       </div>
       <div className='flex justify-between mt-3'>
         <p className='text-left text-sm'>Shipping Charges</p>
-        <p className='text-right text-sm'>₹ {40}</p>
+        <p className='text-right text-sm'>₹ {shippingCharge}</p>
       </div>
       <div className='flex justify-between mt-3'>
         <p className='text-left text-sm'>Discount</p>
@@ -563,7 +585,7 @@ const handleSubmitAddress = async (event) => {
       <div className='my-5' style={{width: '100%', height: '100%', border: '1px black solid'}}></div>
       <div className='flex justify-between mt-3'>
         <p className='text-left text-lg font-semibold'>Total Price</p>
-        <p className='text-right text-lg font-semibold'>₹ {subtotal + 40 - 0}</p>
+        <p className='text-right text-lg font-semibold'>₹ {subtotal + shippingCharge - 0}</p>
       </div>
       </div>
       {/* next stepper */}

@@ -66,6 +66,19 @@ const cartAPI = {
       return error.response;
     }
   },
+  checkAddress: async (deliveryAddress) => {
+    try {
+      const res = await axios.get(`${Backend_URL}/cart/checkAddress/${deliveryAddress}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          },
+      });
+      return res;
+    } catch (error) {
+      return error.res;
+    }
+  },
   checkPincode: async (pincode) => {
     try {
       const response = await axios.get(`https://api.data.gov.in/resource/6176ee09-3d56-4a3b-8115-21841576b2f6?api-key=579b464db66ec23bdd00000182063afa81f041e35ddfa64b1906ddaa&format=json&filters%5Bpincode%5D=${pincode}`)

@@ -6,6 +6,7 @@ import Cart from './pages/Cart';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Checkout from './pages/Payment';
+import Pincode from './pages/Pincode';
 
 // export const Backend_URL = "http://localhost:8080";
 export const Backend_URL = "https://madmonkez-server-153001c412bc.herokuapp.com";
@@ -28,6 +29,8 @@ function App() {
      <Route path='/cart' element={<Cart />} />
 
      <Route path='/payment/:orderId' element={<Checkout />} />
+
+     <Route path='/pincode' element={<Pincode />} />
      
     </Routes>
     </>

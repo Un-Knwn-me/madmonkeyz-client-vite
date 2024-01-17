@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Avatar, Button, Badge, Collapse, IconButton, Input, Typography, Navbar, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
-import logo from '../assets/madMonkeyz.png';
-import { Link } from 'react-router-dom';
+import logo from '../assets/EPlogo.png';
+import { Link, useNavigate } from 'react-router-dom';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -27,6 +27,7 @@ const currentYear = new Date().getFullYear();
 
 const Base = ({title, description, children}) => {
     const [openNav, setOpenNav] = useState(false);
+    const navigate = useNavigate();
     const [search, setSearch] = useState('');
 
     const user = useSelector((state) => state.userInfo.userName);
@@ -50,8 +51,8 @@ const Base = ({title, description, children}) => {
             color="white"
             className="p-1 font-normal"
           >
-            <Link to="/men" className="flex items-center">
-              Men
+            <Link to="/category" className="flex items-center">
+              Category
             </Link>
           </Typography>
           <Typography
@@ -60,18 +61,8 @@ const Base = ({title, description, children}) => {
             color="white"
             className="p-1 font-normal"
           >
-            <Link to="/women" className="flex items-center">
-              Women
-            </Link>
-          </Typography>
-          <Typography
-            as="li"
-            variant="small"
-            color="white"
-            className="p-1 font-normal"
-          >
-            <Link to="/kids" className="flex items-center">
-              Kids
+            <Link to="/support" className="flex items-center">
+              Support
             </Link>
           </Typography>
         </ul>
@@ -124,8 +115,8 @@ const Base = ({title, description, children}) => {
             <Link to='/'>
           <img
               src={logo}
-              alt="Madmonkeyz"
-              style={{ width: '40%', maxWidth: '60%', }}
+              alt="Emperor Polo"
+              style={{ width: '20%' }}
             />
             </Link>
           </div>
@@ -142,7 +133,7 @@ const Base = ({title, description, children}) => {
       </Box>
     </div>
     <div>
-                <Link to='/whislist'>
+                <Link to='/wishlist'>
               <FavoriteBorderOutlinedIcon />
               </Link>
               </div>
@@ -186,7 +177,7 @@ const Base = ({title, description, children}) => {
           </Typography>
         </MenuItem>
         
-        <MenuItem className="flex items-center gap-2">
+        <MenuItem className="flex items-center gap-2" onClick={() => navigate("/order-history")}>
           <svg
             width="14"
             height="14"
@@ -226,7 +217,7 @@ const Base = ({title, description, children}) => {
           </Typography>
         </MenuItem>
         <hr className="my-2 border-blue-gray-50" />
-        <MenuItem className="flex items-center gap-2 ">
+        <MenuItem className="flex items-center gap-2 text-red-500">
           <svg
             width="16"
             height="14"
@@ -279,7 +270,7 @@ const Base = ({title, description, children}) => {
       <div className="w-full px-5 md:px-20 pt-20">
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <Typography variant="h5" className="mb-6">
-            Mad Monkeyz E-commerce
+            Emperor Polo E-commerce
           </Typography>
           <div className="grid grid-cols-3 justify-between gap-4">
             {LINKS.map(({ title, items }) => (
@@ -311,7 +302,7 @@ const Base = ({title, description, children}) => {
             variant="small"
             className="mb-4 text-center font-normal text-blue-gray-500 md:mb-0"
           >
-            &copy; {currentYear} <a href="https://material-tailwind.com/">Mad Monkeyz</a>. All
+            &copy; {currentYear} <a href="https://material-tailwind.com/">Firstlook</a>. All
             Rights Reserved.
           </Typography>
           <div className="flex gap-4 sm:justify-center">

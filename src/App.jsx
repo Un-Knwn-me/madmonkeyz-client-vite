@@ -7,9 +7,12 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Checkout from './pages/Payment';
 import Pincode from './pages/Pincode';
+import OrderHistory from './pages/OrderHistory';
+import OrderDetails from './pages/OrderDetails';
+import Wishlist from './pages/Wishlist';
 
-// export const Backend_URL = "http://localhost:8080";
-export const Backend_URL = "https://madmonkez-server-153001c412bc.herokuapp.com";
+export const Backend_URL = "http://localhost:8080";
+// export const Backend_URL = "https://madmonkez-server-153001c412bc.herokuapp.com";
 export const token = localStorage.getItem('token');
 
 function App() {
@@ -22,11 +25,17 @@ function App() {
  
      <Route path='/signup' element={<SignUp />} />
  
-     <Route path='/men' element={<Mens />} />
+     <Route path='/category' element={<Mens />} />
  
-     <Route path='/men/:id' element={<ProductView />} />
+     <Route path='/category/:id' element={<ProductView />} />
+
+     <Route path='/wishlist' element={<Wishlist/>} />
  
      <Route path='/cart' element={<Cart />} />
+
+     <Route path='/order-history' element={<OrderHistory />} />
+
+     <Route path='/order-history/:orderId' element={<OrderDetails/>} />
 
      <Route path='/payment/:orderId' element={<Checkout />} />
 

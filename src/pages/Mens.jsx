@@ -495,7 +495,7 @@ const productlist = useSelector((state) => state.productList);
         <div className="h-fit mb-20 mx-5 col-span-12 md:col-span-9">
           <div className="flex items-center justify-between mt-5 mb-20">
             <Typography variant="h6" className="mt-5 hidden md:block">
-              Mad Monkeyz Premium
+              Emperor Polo Premium
             </Typography>
             {/* Open Sidebar button */}
             <div className="block md:hidden mt-5">
@@ -559,7 +559,7 @@ const productlist = useSelector((state) => state.productList);
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto">
               {filteredProducts.map((product, key) => (
-                <Link to={`/men/${product._id}`} key={product._id} >
+                <Link to={`/category/${product._id}`} key={product._id} >
                 <ProductCard product={product} />
                 </Link>
               ))}

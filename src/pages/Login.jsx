@@ -34,7 +34,7 @@ const Login = () => {
           localStorage.setItem("token", response.data.token);
           dispatch(loggedIn(response.data));
           toast.success(response.data.message);
-          navigate("/men");
+          navigate("/category");
         } else {
           toast.warning(response.data.message);
         }
@@ -75,7 +75,7 @@ const Login = () => {
                 </clipPath>
               </defs>
             </svg>
-            <span>MAD MONKEYZ</span>
+            <span>Emperor Polo</span>
           </div>
         </div>
 

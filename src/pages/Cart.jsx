@@ -626,7 +626,7 @@ const handleSubmitAddress = async (event) => {
     </div>
 
     <div className='flex justify-center my-5'>
-    <Link to="/men">
+    <Link to="/">
     <Button variant="outlined" sx={{ color: '#000000', borderColor: '#000000', '&:hover': { borderColor: '#000000', color: '#000000', backgroundColor: '#FFFFFF',},}} size="small">
           Back
     </Button>

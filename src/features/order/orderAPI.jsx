@@ -15,6 +15,31 @@ const orderAPI = {
           return error.response;
         }
       },
+    listOrders: async(deliveryStatus, orderOn) => {
+      try {
+        const response = await axios.get(`${Backend_URL}/users/list-orders?orderStatus=${deliveryStatus}&orderDate=${orderOn}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        return response;
+      } catch (error) {
+        return error.response;
+      }
+    },
+    getOrderInfo: async (orderId) => {
+      try {
+        const response = await axios.get(`${Backend_URL}/orders/getOrder/${orderId}`, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+            },
+        });
+        return response;
+      } catch (error) {
+        return error.response;
+      }
+    },
 }
 
 export default orderAPI;

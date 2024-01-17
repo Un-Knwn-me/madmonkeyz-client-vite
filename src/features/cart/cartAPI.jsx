@@ -81,7 +81,7 @@ const cartAPI = {
   },
   checkPincode: async (pincode) => {
     try {
-      const response = await axios.get(`https://api.data.gov.in/resource/6176ee09-3d56-4a3b-8115-21841576b2f6?api-key=579b464db66ec23bdd00000182063afa81f041e35ddfa64b1906ddaa&format=json&filters%5Bpincode%5D=${pincode}`)
+      const response = await axios.get(`https://api.data.gov.in/resource/6176ee09-3d56-4a3b-8115-21841576b2f6?api-key=${import.meta.env.VITE_PINCODE_API}&format=json&filters%5Bpincode%5D=${pincode}`)
       return response
     } catch (error) {
       return error.response

@@ -11,8 +11,8 @@ import OrderHistory from './pages/OrderHistory';
 import OrderDetails from './pages/OrderDetails';
 import Wishlist from './pages/Wishlist';
 
-export const Backend_URL = "http://localhost:8080";
-// export const Backend_URL = "https://madmonkez-server-153001c412bc.herokuapp.com";
+// export const Backend_URL = "http://localhost:8080";
+export const Backend_URL = "https://madmonkez-server-153001c412bc.herokuapp.com";
 export const token = localStorage.getItem('token');
 
 function App() {

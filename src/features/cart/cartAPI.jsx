@@ -1,7 +1,7 @@
 import { Backend_URL } from "../../App";
 import axios from "axios";
 
-export const getAuthToken = () => {
+const getAuthToken = () => {
   return localStorage.getItem('token') || '';
 };
 

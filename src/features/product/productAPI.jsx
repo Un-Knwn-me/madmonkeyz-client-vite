@@ -1,4 +1,4 @@
-import { Backend_URL, getAuthToken } from "../../App";
+import { Backend_URL } from "../../App";
 import axios from "axios"
 
 const getAuthToken = () => {

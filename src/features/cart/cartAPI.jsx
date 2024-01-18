@@ -1,9 +1,7 @@
-import { Backend_URL, token } from "../../App";
-import axios from "axios"
+import { Backend_URL, getAuthToken } from "../../App";
+import axios from "axios";
 
-const getAuthToken = () => {
-  return localStorage.getItem('token') || ''; // Return an empty string if the token is not present
-};
+const token = getAuthToken();
 
 const cartAPI = {
   addItem: async (productId, quantity, salesPrice, price, varientId, selectedSize) => {

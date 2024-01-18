@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { Backend_URL } from '../../App';
+import { Backend_URL, getAuthToken } from '../../App';
+
+const token = getAuthToken();
 
 const userAPI = {
   loginUser: async (userData) => {

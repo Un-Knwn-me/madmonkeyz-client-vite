@@ -1,5 +1,7 @@
-import { Backend_URL, token } from "../../App";
+import { Backend_URL, getAuthToken } from "../../App";
 import axios from "axios"
+
+const token = getAuthToken();
 
 const productAPI = {
   listProducts: async (sortBy) => {

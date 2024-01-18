@@ -188,7 +188,7 @@ const fetchOrders = async () => {
         <img
             className="h-40 w-32 rounded-lg object-cover object-center"
             src={order.products[0].prodImg}
-            alt="nature image"
+            alt={order.products[0].category}
         />
     </div>
     <div className='w-fit mt-2 ml-4'>

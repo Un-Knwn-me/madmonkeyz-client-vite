@@ -17,6 +17,7 @@ const cartAPI = {
   },
   getItem: async () => {
     try {
+      console.log(token)
       const response = await axios.get(`${Backend_URL}/cart/getProducts`, {
         headers: {
             Authorization: `Bearer ${token}`,

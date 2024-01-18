@@ -1,6 +1,10 @@
 import { Backend_URL, token } from "../../App";
 import axios from "axios"
 
+const getAuthToken = () => {
+  return localStorage.getItem('token') || ''; // Return an empty string if the token is not present
+};
+
 const cartAPI = {
   addItem: async (productId, quantity, salesPrice, price, varientId, selectedSize) => {
     try {
@@ -17,7 +21,7 @@ const cartAPI = {
   },
   getItem: async () => {
     try {
-      console.log(token)
+      console.log(getAuthToken())
       const response = await axios.get(`${Backend_URL}/cart/getProducts`, {
         headers: {
             Authorization: `Bearer ${token}`,

@@ -2,7 +2,7 @@ import { Backend_URL, token } from "../../App";
 import axios from "axios"
 
 const getAuthToken = () => {
-  return localStorage.getItem('token') || ''; // Return an empty string if the token is not present
+  return localStorage.getItem('token') || '';
 };
 
 const cartAPI = {
@@ -11,7 +11,7 @@ const cartAPI = {
       const response = await axios.post(`${Backend_URL}/cart/addToCart`, {productId, quantity, salesPrice, price, varientId, selectedSize}, {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${getAuthToken()}`,
           },
       });
       return response;
@@ -21,10 +21,9 @@ const cartAPI = {
   },
   getItem: async () => {
     try {
-      console.log(getAuthToken())
       const response = await axios.get(`${Backend_URL}/cart/getProducts`, {
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${getAuthToken()}`,
           },
       });
       return response;
@@ -37,7 +36,7 @@ const cartAPI = {
       const response = await axios.put(`${Backend_URL}/cart/changeQuantity`, {cartId, quantity}, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${getAuthToken()}`,
           },
       });
       return response;
@@ -50,7 +49,7 @@ const cartAPI = {
       const response = await axios.delete(`${Backend_URL}/cart/removecart/${cartId}`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${getAuthToken()}`,
           },
       });
       return response;
@@ -63,7 +62,7 @@ const cartAPI = {
       const response = await axios.post(`${Backend_URL}/cart/addAddress`, {formData}, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${getAuthToken()}`,
           },
       });
       return response;
@@ -76,7 +75,7 @@ const cartAPI = {
       const res = await axios.get(`${Backend_URL}/cart/checkAddress/${deliveryAddress}`, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${getAuthToken()}`,
           },
       });
       return res;

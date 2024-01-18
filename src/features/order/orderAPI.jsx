@@ -1,6 +1,5 @@
 import axios from "axios";
-import { Backend_URL } from "../../App";
-
+import { Backend_URL, token } from "../../App";
 
 const orderAPI = {
     newOrder: async(shippingAddress, totalItems, subTotalAmount, shippingCharge) => {
@@ -8,7 +7,7 @@ const orderAPI = {
           const response = await axios.post(`${Backend_URL}/orders/createOrder`, {shippingAddress, totalItems, subTotalAmount, shippingCharge}, {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${token}`,
               },
           });
           return response;
@@ -21,7 +20,7 @@ const orderAPI = {
         const response = await axios.get(`${Backend_URL}/users/list-orders?orderStatus=${deliveryStatus}&orderDate=${orderOn}`, {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
           },
         })
         return response;
@@ -33,7 +32,7 @@ const orderAPI = {
       try {
         const response = await axios.get(`${Backend_URL}/orders/getOrder/${orderId}`, {
           headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${token}`,
             },
         });
         return response;

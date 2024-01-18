@@ -1,6 +1,9 @@
-import { Backend_URL } from "../../App";
-import axios from "axios";
+import { Backend_URL, token } from "../../App";
+import axios from "axios"
 
+const getAuthToken = () => {
+  return localStorage.getItem('token') || ''; // Return an empty string if the token is not present
+};
 
 const cartAPI = {
   addItem: async (productId, quantity, salesPrice, price, varientId, selectedSize) => {
@@ -8,7 +11,7 @@ const cartAPI = {
       const response = await axios.post(`${Backend_URL}/cart/addToCart`, {productId, quantity, salesPrice, price, varientId, selectedSize}, {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
           },
       });
       return response;
@@ -18,9 +21,10 @@ const cartAPI = {
   },
   getItem: async () => {
     try {
+      console.log(getAuthToken())
       const response = await axios.get(`${Backend_URL}/cart/getProducts`, {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
           },
       });
       return response;
@@ -33,7 +37,7 @@ const cartAPI = {
       const response = await axios.put(`${Backend_URL}/cart/changeQuantity`, {cartId, quantity}, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
           },
       });
       return response;
@@ -43,7 +47,6 @@ const cartAPI = {
   },
   removeItem: async (cartId) => {
     try {
-      const token = getAuthToken();
       const response = await axios.delete(`${Backend_URL}/cart/removecart/${cartId}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +60,6 @@ const cartAPI = {
   },
   addAddress: async (formData) => {
     try {
-      const token = getAuthToken();
       const response = await axios.post(`${Backend_URL}/cart/addAddress`, {formData}, {
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +73,6 @@ const cartAPI = {
   },
   checkAddress: async (deliveryAddress) => {
     try {
-      const token = getAuthToken();
       const res = await axios.get(`${Backend_URL}/cart/checkAddress/${deliveryAddress}`, {
         headers: {
           'Content-Type': 'application/json',

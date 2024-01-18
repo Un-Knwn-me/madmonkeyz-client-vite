@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Backend_URL } from '../../App';
 
-
 const userAPI = {
   loginUser: async (userData) => {
     try {

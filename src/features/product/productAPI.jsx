@@ -1,13 +1,12 @@
-import { Backend_URL } from "../../App";
-import axios from "axios"
-
+import { Backend_URL, token } from "../../App";
+import axios from "axios";
 
 const productAPI = {
   listProducts: async (sortBy) => {
     try {
       const response = await axios.get(`${Backend_URL}/product/list?sortBy=${sortBy}`, {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
           },
       });
       return response;
@@ -19,7 +18,7 @@ const productAPI = {
     try {
       const response = await axios.get(`${Backend_URL}/product/${productId}`, {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${token}`,
           },
       });
       return response;

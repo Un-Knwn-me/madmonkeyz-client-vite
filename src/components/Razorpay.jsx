@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import crypto from 'crypto-browserify';
+import crypto from 'crypto';
 import PropTypes from 'prop-types';
 import logo from '../assets/madMonkeyz.png';
 import Axios from 'axios';

@@ -1,9 +1,6 @@
 import axios from 'axios';
 import { Backend_URL } from '../../App';
 
-const getAuthToken = () => {
-  return localStorage.getItem('token') || '';
-};
 
 const userAPI = {
   loginUser: async (userData) => {

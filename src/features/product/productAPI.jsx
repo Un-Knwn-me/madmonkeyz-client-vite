@@ -1,17 +1,13 @@
 import { Backend_URL } from "../../App";
 import axios from "axios"
 
-const getAuthToken = () => {
-  return localStorage.getItem('token') || '';
-};
 
 const productAPI = {
   listProducts: async (sortBy) => {
     try {
-      const token = getAuthToken();
       const response = await axios.get(`${Backend_URL}/product/list?sortBy=${sortBy}`, {
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
       });
       return response;
@@ -21,10 +17,9 @@ const productAPI = {
   },
   getProductInfo: async (productId) => {
     try {
-      const token = getAuthToken();
       const response = await axios.get(`${Backend_URL}/product/${productId}`, {
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
       });
       return response;

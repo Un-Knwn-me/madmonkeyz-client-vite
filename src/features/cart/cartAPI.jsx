@@ -1,18 +1,14 @@
 import { Backend_URL } from "../../App";
 import axios from "axios";
 
-const getAuthToken = () => {
-  return localStorage.getItem('token') || '';
-};
 
 const cartAPI = {
   addItem: async (productId, quantity, salesPrice, price, varientId, selectedSize) => {
     try {
-      const token = getAuthToken();
       const response = await axios.post(`${Backend_URL}/cart/addToCart`, {productId, quantity, salesPrice, price, varientId, selectedSize}, {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
       });
       return response;
@@ -22,10 +18,9 @@ const cartAPI = {
   },
   getItem: async () => {
     try {
-      const token = getAuthToken();
       const response = await axios.get(`${Backend_URL}/cart/getProducts`, {
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
       });
       return response;
@@ -35,11 +30,10 @@ const cartAPI = {
   },
   updateItem: async (cartId, quantity) => {
     try {
-      const token = getAuthToken();
       const response = await axios.put(`${Backend_URL}/cart/changeQuantity`, {cartId, quantity}, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
       });
       return response;

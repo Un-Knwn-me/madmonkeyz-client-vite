@@ -1,11 +1,14 @@
 import axios from "axios";
-import { Backend_URL, getAuthToken } from "../../App";
+import { Backend_URL} from "../../App";
 
-const token = getAuthToken();
+export const getAuthToken = () => {
+  return localStorage.getItem('token') || '';
+};
 
 const paymentAPI = {
     initiatePay: async(orderId) => {
         try {
+          const token = getAuthToken();
           const response = await axios.post(`${Backend_URL}/payment/initiate`, {orderId}, {
             headers: {
                 'Content-Type': 'application/json',

@@ -1,7 +1,9 @@
 import axios from 'axios';
-import { Backend_URL, getAuthToken } from '../../App';
+import { Backend_URL } from '../../App';
 
-const token = getAuthToken();
+export const getAuthToken = () => {
+  return localStorage.getItem('token') || '';
+};
 
 const userAPI = {
   loginUser: async (userData) => {

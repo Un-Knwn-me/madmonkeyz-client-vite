@@ -1,11 +1,14 @@
 import { Backend_URL, getAuthToken } from "../../App";
 import axios from "axios"
 
-const token = getAuthToken();
+export const getAuthToken = () => {
+  return localStorage.getItem('token') || '';
+};
 
 const productAPI = {
   listProducts: async (sortBy) => {
     try {
+      const token = getAuthToken();
       const response = await axios.get(`${Backend_URL}/product/list?sortBy=${sortBy}`, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -18,6 +21,7 @@ const productAPI = {
   },
   getProductInfo: async (productId) => {
     try {
+      const token = getAuthToken();
       const response = await axios.get(`${Backend_URL}/product/${productId}`, {
         headers: {
             Authorization: `Bearer ${token}`,

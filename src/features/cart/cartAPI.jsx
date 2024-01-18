@@ -1,11 +1,14 @@
-import { Backend_URL, getAuthToken } from "../../App";
+import { Backend_URL } from "../../App";
 import axios from "axios";
 
-const token = getAuthToken();
+export const getAuthToken = () => {
+  return localStorage.getItem('token') || '';
+};
 
 const cartAPI = {
   addItem: async (productId, quantity, salesPrice, price, varientId, selectedSize) => {
     try {
+      const token = getAuthToken();
       const response = await axios.post(`${Backend_URL}/cart/addToCart`, {productId, quantity, salesPrice, price, varientId, selectedSize}, {
         headers: {
             'Content-Type': 'application/json',
@@ -19,7 +22,7 @@ const cartAPI = {
   },
   getItem: async () => {
     try {
-      console.log(getAuthToken())
+      const token = getAuthToken();
       const response = await axios.get(`${Backend_URL}/cart/getProducts`, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -32,6 +35,7 @@ const cartAPI = {
   },
   updateItem: async (cartId, quantity) => {
     try {
+      const token = getAuthToken();
       const response = await axios.put(`${Backend_URL}/cart/changeQuantity`, {cartId, quantity}, {
         headers: {
           'Content-Type': 'application/json',
@@ -45,6 +49,7 @@ const cartAPI = {
   },
   removeItem: async (cartId) => {
     try {
+      const token = getAuthToken();
       const response = await axios.delete(`${Backend_URL}/cart/removecart/${cartId}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -58,6 +63,7 @@ const cartAPI = {
   },
   addAddress: async (formData) => {
     try {
+      const token = getAuthToken();
       const response = await axios.post(`${Backend_URL}/cart/addAddress`, {formData}, {
         headers: {
           'Content-Type': 'application/json',
@@ -71,6 +77,7 @@ const cartAPI = {
   },
   checkAddress: async (deliveryAddress) => {
     try {
+      const token = getAuthToken();
       const res = await axios.get(`${Backend_URL}/cart/checkAddress/${deliveryAddress}`, {
         headers: {
           'Content-Type': 'application/json',

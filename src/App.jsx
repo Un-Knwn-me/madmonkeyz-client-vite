@@ -10,6 +10,7 @@ import Pincode from './pages/Pincode';
 import OrderHistory from './pages/OrderHistory';
 import OrderDetails from './pages/OrderDetails';
 import Wishlist from './pages/Wishlist';
+import Home from './pages/Home';
 
 // export const Backend_URL = "http://localhost:8080";
 export const Backend_URL = "https://madmonkez-server-153001c412bc.herokuapp.com";
@@ -23,7 +24,9 @@ function App() {
     <>
     <Routes>
  
-     <Route exact path='/' element={<Login />} />
+     <Route exact path='/' element={<Home />} />
+
+     <Route path='/login' element={<Login />} />
  
      <Route path='/signup' element={<SignUp />} />
  

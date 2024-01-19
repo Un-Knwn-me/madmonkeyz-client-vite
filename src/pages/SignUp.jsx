@@ -63,7 +63,7 @@ import { toast } from "react-toastify";
 
         if (response.status === 200) {
           toast.success(response.data.message);
-          navigate("/");
+          navigate("/login");
         } else {
           toast.warning(response.data.message);
         }
@@ -368,7 +368,7 @@ import { toast } from "react-toastify";
   
                 <Typography color="gray" className="mt-4 text-center font-normal">
                   Already have an account?{" "}
-                  <Link to="/" className="font-medium text-gray-900">
+                  <Link to="/login" className="font-medium text-gray-900">
                     Sign in
                   </Link>
                 </Typography>

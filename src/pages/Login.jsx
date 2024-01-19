@@ -34,7 +34,7 @@ const Login = () => {
           localStorage.setItem("token", response.data.token);
           dispatch(loggedIn(response.data));
           toast.success(response.data.message);
-          navigate("/category");
+          navigate("/");
         } else {
           toast.warning(response.data.message);
         }

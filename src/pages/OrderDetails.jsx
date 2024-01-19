@@ -84,7 +84,7 @@ const OrderDetails = () => {
   const steps = [
     'Order Confirmed',
     'Dispatched',
-    'Shipped',
+    'Out for Delivery',
     'Delivered'
   ];
 
@@ -115,11 +115,11 @@ const OrderDetails = () => {
             <div className='mt-10 mb-5 text-lg font-medium'>Order Details</div>
 
             <div className="rounded-lg md:divide-x divide-gray-400 mb-5 bg-white py-5 px-8 shadow-lg md:flex md:justify-between backdrop-blur-md max-sm:px-8">
-                <div className='w-64'>
+                <div className='w-fit'>
                   <div className='text-base font-normal text-gray-900'>
                     Order Id: <span className='text-sm text-gray-600 font-normal'>{orderDetails._id}</span>
                   </div>
-                  <div className='mt-5'>
+                  <div className='mt-4'>
                     <p className='text-base font-medium mb-2'>
                       {orderDetails.deliveryAddress.name}
                     </p>
@@ -131,6 +131,9 @@ const OrderDetails = () => {
                       +91 {orderDetails.deliveryAddress.phone}
                     </p>
                   </div>
+                  <p className='text-xs font-light text-gray-700 mt-2'>
+                    Order placed on { new Date(orderDetails.orderDate).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }) }
+                  </p>
                 </div>
                 <div className='mt-5 md:mt-0 md:pl-5 w-full'>
                   <div className='md:flex md:justify-between'>

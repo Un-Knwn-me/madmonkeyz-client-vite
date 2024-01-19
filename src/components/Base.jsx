@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Avatar, Button, Badge, Collapse, IconButton, Input, Typography, Navbar, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
+import { Avatar, Button, Badge, Collapse, IconButton, Typography, Navbar, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
 import logo from '../assets/EPlogo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 const LINKS = [
   {
     title: "Product",
-    items: ["Men", "Women", "Kids"],
+    items: ["Shirts", "Pant", "Hoodies"],
   },
   {
     title: "Company",

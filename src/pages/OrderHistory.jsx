@@ -39,7 +39,7 @@ const fetchOrders = async () => {
   }, [orderOn, deliveryStatus]);
 
   const orderList = useSelector((state) => state.order.orderList);
-  console.log('orders: ', orderList)
+  
   return (
     <Base title={'Order History'}>
         <div className='my-6 md:my-10 mx-5 md:mx-20'>

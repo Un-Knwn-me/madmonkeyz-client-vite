@@ -6,6 +6,18 @@ const getAuthToken = () => {
 };
 
 const productAPI = {
+  homeProducts: async (userId) => {
+    try {
+      const response = await axios.get(`${Backend_URL}/product/home?userId=${userId}`, {
+        headers: {
+            Authorization: `Bearer ${getAuthToken()}`,
+          },
+      });
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  },
   listProducts: async (sortBy) => {
     try {
       const response = await axios.get(`${Backend_URL}/product/list?sortBy=${sortBy}`, {

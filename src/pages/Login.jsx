@@ -32,6 +32,7 @@ const Login = () => {
      
     if (response.status === 200) {
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("userId", response.data.userId);
           dispatch(loggedIn(response.data));
           toast.success(response.data.message);
           navigate("/");

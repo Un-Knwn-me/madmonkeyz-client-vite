@@ -194,7 +194,7 @@ const OrderDetails = () => {
               {/* products */}
               {orderDetails.products.map((product, key) => (
             <div className="rounded-lg md:divide-x divide-gray-400 mb-5 bg-white p-3 shadow-lg md:flex md:justify-between backdrop-blur-md max-sm:px-8" key={product._id}>
-              <div className='columns-2 flex w-full'>
+              <div className='columns-2 flex min-w-80'>
                 <div className='w-full'>
                   <img
                       className="h-40 w-32 rounded-lg object-cover object-center"
@@ -202,12 +202,13 @@ const OrderDetails = () => {
                       alt="nature image"
                   />
                 </div>
-                <div className='w-full mt-2 mx-4'>
+                <div className='w-full mt-1 mx-4'>
                     <p className='text-base font-medium'>
                         {product.prodName}
                     </p>
+                    <p className='text-xs font-light text-gray-600'>{product.prodCategory}</p>
                     <p className='text-sm font-medium text-gray-600 mt-2'>
-                        {product.prodCategory}
+                        Color: {product.prodColor}
                     </p>
                     <p className='text-sm font-medium text-gray-600 mt-1'>
                         Size : {product.selectedSize} 
@@ -215,16 +216,19 @@ const OrderDetails = () => {
                     <p className='text-sm font-medium text-gray-600 mt-1'>
                         Quantity: {product.quantity}
                     </p>
-                    <p className='text-lg font-medium mt-3'>₹ {product.salesPrice}</p>
+                    <p className='text-lg font-medium mt-3'>₹ {product.salesPrice * product.quantity}</p>
                 </div>
               </div>
 
               {/* review */}
               <div className='flex justify-between w-full mt-5 md:mt-0'>
                 <div className="flex items-center align-middle">
-                  <Button variant="text" className="text-blue-500 md:ml-10" >
+                  <div className=' md:ml-10'>
+                  <Button variant="text" className="text-blue-500" >
                     Return / Refund
                   </Button>
+                  <p className='text-xs font-light text-gray-600 align-middle'>Return policy ended on </p>
+                  </div>
                 </div>
                 <div className="flex items-center align-middle">
                   <p className='text-sm font-medium text-gray-700 mt-2'>

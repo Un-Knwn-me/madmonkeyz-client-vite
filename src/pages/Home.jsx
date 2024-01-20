@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Base from '../components/Base'
-import { Button, Carousel, Typography } from '@material-tailwind/react'
+import { Carousel } from '@material-tailwind/react'
 import ProductCard from '../components/ProductCard'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -10,6 +10,8 @@ import { calculateTotals, getItems } from '../features/cart/cartSlice'
 import productAPI from '../features/product/productAPI'
 import { homeList } from '../features/product/productSlice'
 import Loader from '../components/Loader'
+import flatBanner1 from '../assets/images/Banner flat 1.png'
+import flatBanner2 from '../assets/images/Banner flat 2.png';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -57,7 +59,7 @@ const Home = () => {
   return (
     <Base title={'Home'}>
         <div className="relative mb-40">
-            <Carousel transition={{ duration: 1 }} prevArrow={false} style={{ height: "80vh" }} autoplayDelay={8000} nextArrow={false} navigation={false} autoplay={true} loop={true}>
+            <Carousel transition={{ duration: 1 }} prevArrow={false} style={{ height: "85vh" }} autoplayDelay={8000} nextArrow={false} navigation={false} autoplay={true} loop={true}>
                 <div className="relative h-full w-full">
                     <img
                     src="https://images.pexels.com/photos/838413/pexels-photo-838413.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -109,13 +111,31 @@ const Home = () => {
             </div>
         </div>
 
+        {/* Flat banner */}
+        <div className='columns-2 flex m-20'>
+            <div className='w-full'>
+            <img
+                className="object-cover object-center"
+                src={flatBanner1}
+                alt="Flat banner 1"
+            />
+            </div>
+            <div className='w-full'>
+            <img
+                className="object-cover object-center"
+                src={flatBanner2}
+                alt="Flat banner 2"
+            />
+            </div>
+        </div>
+        
         <div className='my-10 text-lg font-medium text-center'>Special Arrivals For You</div>
 
         {/* Product List */}
         {homeProducts && homeProducts.length === 0 ? (
             <Loader />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:m-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 m-10 md:m-20">
               {homeProducts.map((product, key) => (
                 <Link to={`/category/${product._id}`} key={product._id} >
                     <ProductCard product={product} />

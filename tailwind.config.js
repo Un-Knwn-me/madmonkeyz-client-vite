@@ -14,6 +14,7 @@ module.exports = withMT({
     extend: {
       fontFamily: {
         'red-hat-display': ['Red Hat Display', 'sans-serif'],
+        'serif': ['Times New Roman', 'serif'],
       },
       margin: {
         '30': '7.5rem',

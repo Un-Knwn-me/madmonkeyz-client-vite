@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Base from '../components/Base'
 import { Carousel } from '@material-tailwind/react'
 import ProductCard from '../components/ProductCard'
@@ -15,9 +15,12 @@ import flatBanner2 from '../assets/images/Banner flat 2.png';
 import adBanner1 from '../assets/images/Banner 1.png';
 import adBanner2 from '../assets/images/Banner 3.png';
 import brandBanner1 from '../assets/images/brand banner 1.png';
+import couponbg from '../assets/images/Coupon.png';
 
 const Home = () => {
     const dispatch = useDispatch();
+    const textRef = useRef();
+    const [copied, setCopied] = useState(false);
 
     // Get products
     const fetchProducts = async () => {
@@ -123,7 +126,7 @@ const Home = () => {
                     alt="Flat banner 1"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-white text-3xl tracking-wide font-bold">FLAT ₹ 50 OFF</p>
+                    <p className="text-white text-5xl font-times-new-roman tracking-wide font-medium">FLAT <span className='text-3xl align-top'>₹</span>50 OFF</p>
                 </div>
             </div>
                 <div className='w-full relative'>
@@ -168,7 +171,44 @@ const Home = () => {
           </div>
 
         {/* Coupons */}
-        <div className='mt-30 mb-20 text-2xl font-medium text-blue-800 text-center font-red-hat-display'>COUPON ZONE</div>
+        <div className='mt-30 mb-20 text-2xl font-medium text-blue-800 text-center font-times-new-roman'>COUPON ZONE</div>
+
+        <div className='columns-2 flex m-10 md:m-20'>
+            <div className='w-fit relative mx-20'>
+                <img
+                    className="object-fit object-center"
+                    src={couponbg}
+                    alt="Flat banner 1"
+                />
+                <div className="absolute inset-0 columns-2 flex items-center justify-center">
+                    <div className='text-center mx-5'>
+                    <p className="text-white text-2xl font-times-new-roman tracking-wide leading-10 font-medium">UPTO 50% OFF</p>
+                    <p className="text-white text-lg font-red-hat-display leading-tight tracking-tight font-normal">On All Products</p>
+                    </div>
+                    <div className='px-4 py-2 bg-white'>
+                    <p className="text-center text-black text-sm py-2 font-semibold font-red-hat-display leading-tight tracking-tight">USE CODE</p>
+                    <p className="text-center text-white bg-black py-2 px-3 text-xs font-bold font-red-hat-display leading-tight tracking-tight">EMPOLO50</p>
+                    </div>
+                </div>
+            </div>
+                <div className='w-fit relative mx-20'>
+                <img
+                    className="object-fit object-center"
+                    src={couponbg}
+                    alt="Flat banner 1"
+                />
+                <div className="absolute inset-0 columns-2 flex items-center justify-center">
+                    <div className='text-center mx-5'>
+                    <p className="text-white text-2xl font-times-new-roman tracking-wide leading-10 font-medium">UPTO 20% OFF</p>
+                    <p className="text-white text-lg font-red-hat-display leading-tight tracking-tight font-normal">On All Products</p>
+                    </div>
+                    <div className='px-4 py-2 bg-white'>
+                    <p className="text-center text-black text-sm py-2 font-semibold font-red-hat-display leading-tight tracking-tight">USE CODE</p>
+                    <p className="text-center text-white bg-black py-2 px-3 text-xs font-bold font-red-hat-display leading-tight tracking-tight">EMPOLO20</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </Base>
   )

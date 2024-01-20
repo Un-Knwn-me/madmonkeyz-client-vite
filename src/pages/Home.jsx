@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Base from '../components/Base'
-import { Carousel } from '@material-tailwind/react'
+import { Card, CardBody, CardFooter, CardHeader, Carousel, Typography } from '@material-tailwind/react'
 import ProductCard from '../components/ProductCard'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -19,8 +19,6 @@ import couponbg from '../assets/images/Coupon.png';
 
 const Home = () => {
     const dispatch = useDispatch();
-    const textRef = useRef();
-    const [copied, setCopied] = useState(false);
 
     // Get products
     const fetchProducts = async () => {
@@ -118,7 +116,7 @@ const Home = () => {
         </div>
 
         {/* Flat banner */}
-        <div className='columns-2 flex m-10 md:m-20'>
+        <div className='columns-2 flex m-10 md:my-20 md:mx-30'>
             <div className='w-full relative'>
                 <img
                     className="object-cover object-center"
@@ -126,7 +124,7 @@ const Home = () => {
                     alt="Flat banner 1"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-white text-5xl font-times-new-roman tracking-wide font-medium">FLAT <span className='text-3xl align-top'>₹</span>50 OFF</p>
+                    <p className="text-white text-5xl font-times-new-roman tracking-wider leading-10 text-center font-medium">FLAT <span className='text-3xl align-top'>₹</span>50 OFF</p>
                 </div>
             </div>
                 <div className='w-full relative'>
@@ -136,7 +134,7 @@ const Home = () => {
                     alt="Flat banner 2"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-white text-2xl tracking-wide text-center font-light mx-5">On your first purchase above ₹2000</p>
+                    <p className="text-white text-2xl leading-10 tracking-wide text-center font-light mx-5">On your first purchase above ₹2000</p>
                 </div>
             </div>
         </div>
@@ -147,7 +145,7 @@ const Home = () => {
         {homeProducts && homeProducts.length === 0 ? (
             <Loader />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 m-10 md:m-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 m-10 md:my-20 md:mx-30">
               {homeProducts.map((product, key) => (
                 <Link to={`/category/${product._id}`} key={product._id} >
                     <ProductCard product={product} />
@@ -158,11 +156,11 @@ const Home = () => {
 
           {/* AD banner 1 */}
 
-          <div className='w-fit my-20 mx-20'>
+          <div className='w-fit my-20 md:mx-20'>
             <img src={adBanner1} alt="Ad banner 1" />
           </div>
 
-          <div className='w-fit my-20 mx-20'>
+          <div className='w-fit my-20 md:mx-20'>
             <img src={adBanner2} alt="Ad banner 1" />
           </div>
 
@@ -210,6 +208,71 @@ const Home = () => {
             </div>
         </div>
 
+        {/* Category */}
+        <div className='mt-30 mb-20 text-2xl font-medium text-blue-800 text-center font-times-new-roman'>SHOP BY CATEGORY</div>
+
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-auto m-10 md:my-20 md:mx-30'>
+    <div className="w-60 h-80 relative shadow border-8 border-green-600 bg-green-600">
+            <div className="w-56 h-52">
+                <img
+                    src="https://images.pexels.com/photos/1192601/pexels-photo-1192601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="card-image"
+                    className="h-full w-full object-cover"
+                />
+            </div>
+            <div className='my-3'>
+                <p className='text-center text-white text-sm font-light font-red-hat-display leading-tight tracking-tight my-1'>Mens Casual Wear</p>
+                <p className='text-center text-white text-xl font-bold font-times-new-roman leading-tight tracking-wide'>20 - 30% OFF</p>
+            </div>
+            <div className='text-center text-white text-sm font-semibold font-red-hat-display leading-tight tracking-tight mt-4'>Shop Now</div>
+        </div>
+
+        <div className="w-60 h-80 relative shadow border-8 border-green-600 bg-green-600">
+            <div className="w-56 h-52">
+                <img
+                    src="https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="card-image"
+                    className="h-full w-full object-cover"
+                />
+            </div>
+            <div className='my-3'>
+                <p className='text-center text-white text-sm font-light font-red-hat-display leading-tight tracking-tight my-1'>Mens Casual Wear</p>
+                <p className='text-center text-white text-xl font-bold font-times-new-roman leading-tight tracking-wide'>20 - 30% OFF</p>
+            </div>
+            <div className='text-center text-white text-sm font-semibold font-red-hat-display leading-tight tracking-tight mt-4'>Shop Now</div>
+        </div>
+
+        <div className="w-60 h-80 relative shadow border-8 border-green-600 bg-green-600">
+            <div className="w-56 h-52">
+                <img
+                    src="https://images.pexels.com/photos/1192601/pexels-photo-1192601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="card-image"
+                    className="h-full w-full object-cover"
+                />
+            </div>
+            <div className='my-3'>
+                <p className='text-center text-white text-sm font-light font-red-hat-display leading-tight tracking-tight my-1'>Mens Casual Wear</p>
+                <p className='text-center text-white text-xl font-bold font-times-new-roman leading-tight tracking-wide'>20 - 30% OFF</p>
+            </div>
+            <div className='text-center text-white text-sm font-semibold font-red-hat-display leading-tight tracking-tight mt-4'>Shop Now</div>
+        </div>
+
+        <div className="w-60 h-80 relative shadow border-8 border-green-600 bg-green-600">
+            <div className="w-56 h-52">
+                <img
+                    src="https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="card-image"
+                    className="h-full w-full object-cover"
+                />
+            </div>
+            <div className='my-3'>
+                <p className='text-center text-white text-sm font-light font-red-hat-display leading-tight tracking-tight my-1'>Mens Casual Wear</p>
+                <p className='text-center text-white text-xl font-bold font-times-new-roman leading-tight tracking-wide'>20 - 30% OFF</p>
+            </div>
+            <div className='text-center text-white text-sm font-semibold font-red-hat-display leading-tight tracking-tight mt-4'>Shop Now</div>
+        </div>
+
+    </div>
     </Base>
   )
 }

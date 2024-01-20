@@ -56,6 +56,7 @@ const OrderDetails = () => {
   const { orderDetails } = useSelector((state) => state.order);
 
   console.log("a", orderDetails)
+  // Copy to clipboard
   const copyToClipboard = () => {
       const copyText = textRef.current.innerText;
       let isCopy = copy(copyText);

@@ -11,7 +11,14 @@ module.exports = withMT({
     colors: {
       metal: "#D9D9D9",
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        'red-hat-display': ['Red Hat Display', 'sans-serif'],
+      },
+      margin: {
+        '30': '7.5rem',
+      }
+    },
   },
   plugins: [],
 });

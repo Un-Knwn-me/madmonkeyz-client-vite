@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Avatar, Button, Badge, Collapse, IconButton, Typography, Navbar, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
+import { Avatar, Button, Badge, Collapse, IconButton, Typography, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
 import logo from '../assets/EPlogo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
@@ -7,6 +7,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { Box, TextField } from '@mui/material';
 import { useSelector } from 'react-redux';
+import Navbar from '../components/Navbar';
 
 const LINKS = [
   {
@@ -70,8 +71,25 @@ const Base = ({title, description, children}) => {
 
     return (
       <>
-      <div className="-mt-1 -ml-1 w-full">
-      <Navbar color="transparent" className="sticky top-0 z-10 bg-black h-max max-w-full rounded-none px-4 py-2 md:py-1 lg:px-10">
+      <div className="w-full">
+        {/* Announcement bar */}
+      <div class="flex h-8 bg-cyan-500 text-white flex items-center justify-between">
+        <p class="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
+            Express Delivery
+        </p>
+        <p class="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
+            Signup & get 50% off
+        </p>
+        <p class="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
+            100% pure cotton
+        </p>
+      </div>
+
+      {/* Navbar */}
+
+      <Navbar />
+
+      {/* <Navbar color="transparent" className="sticky top-0 z-10 bg-black max-w-full rounded-none px-4 py-2 md:py-1 lg:px-10">
       
         <div className="flex items-center justify-between text-white">
         <IconButton
@@ -258,7 +276,7 @@ const Base = ({title, description, children}) => {
             </Button>
           </div>
         </Collapse>
-      </Navbar>
+      </Navbar> */}
       </div>
       
           <main>

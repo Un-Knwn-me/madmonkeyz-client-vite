@@ -10,10 +10,11 @@ import BpRadio from "../components/SizeCheckBox.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import productAPI from "../features/product/productAPI.jsx";
 import { listProducts } from '../features/product/productSlice.jsx';
-import Base from "../components/Base.jsx";
 import cartAPI from "../features/cart/cartAPI.jsx";
 import { calculateTotals, getItems } from "../features/cart/cartSlice.jsx";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
 
 const Mens = () => {
   const [category, setCategory] = useState("");
@@ -86,7 +87,8 @@ const productlist = useSelector((state) => state.productList);
   };
 
   return (
-    <Base title={'Men'}>
+    <>
+    <Navbar />
 
       {/* Banner */}
       <div
@@ -567,7 +569,8 @@ const productlist = useSelector((state) => state.productList);
           )}
         </div>
       </div>
-    </Base>
+      <Footer />
+    </>
   );
 };
 

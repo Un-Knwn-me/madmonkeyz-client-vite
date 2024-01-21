@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Base from '../components/Base'
+import React, { useEffect, useRef, useState } from 'react';
 import { Breadcrumbs, Button, Popover, PopoverContent, PopoverHandler, Rating, } from '@material-tailwind/react'
 import { Link, useParams } from 'react-router-dom'
 import orderAPI from '../features/order/orderAPI'
@@ -14,6 +13,8 @@ import copy from 'copy-to-clipboard';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import Loader from '../components/Loader'
 import { Box, Step, StepLabel, Stepper, styled } from '@mui/material'
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const OrderDetails = () => {
     const { orderId } = useParams();
@@ -90,7 +91,8 @@ const OrderDetails = () => {
   ];
 
   return (
-    <Base title={'Order Details'}>
+    <>
+      <Navbar />
       {orderDetails && orderDetails.deliveryAddress ? (
         <div className='my-6 md:my-10 mx-5 md:mx-20'>
 
@@ -254,7 +256,9 @@ const OrderDetails = () => {
     ) : (
         <Loader />
       )}
-    </Base>
+      
+      <Footer/>
+    </>
   )
 }
 

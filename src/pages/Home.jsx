@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Base from '../components/Base'
+import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardBody, CardFooter, CardHeader, Carousel, Typography } from '@material-tailwind/react'
 import ProductCard from '../components/ProductCard'
 import { Link } from 'react-router-dom'
@@ -16,6 +15,8 @@ import adBanner1 from '../assets/images/Banner 1.png';
 import adBanner2 from '../assets/images/Banner 3.png';
 import brandBanner1 from '../assets/images/brand banner 1.png';
 import couponbg from '../assets/images/Coupon.png';
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -61,7 +62,8 @@ const Home = () => {
     const homeProducts = useSelector((state) => state.products.homeProducts);
 
   return (
-    <Base title={'Home'}>
+    <>
+    <Navbar />
         <div className="relative mb-30">
             <Carousel transition={{ duration: 1 }} prevArrow={false} style={{ height: "85vh" }} autoplayDelay={8000} nextArrow={false} navigation={false} autoplay={true} loop={true}>
                 <div className="relative h-full w-full">
@@ -273,7 +275,8 @@ const Home = () => {
         </div>
 
     </div>
-    </Base>
+    <Footer />
+    </>
   )
 }
 

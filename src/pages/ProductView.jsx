@@ -22,10 +22,11 @@ import AddIcon from "@mui/icons-material/Add";
 import cartAPI from "../features/cart/cartAPI";
 import { addItems, calculateTotals, getItems } from "../features/cart/cartSlice";
 import { toast } from "react-toastify";
-import Base from "../components/Base";
 import productAPI from "../features/product/productAPI";
 import { productInfo } from "../features/product/productSlice";
 import CalculateOfferPercentage from "../components/CalculateOfferPercentage";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 
 const theme = {
@@ -130,7 +131,8 @@ const ProductView = () => {
       };
 
   return (
-    <Base>
+    <>
+    <Navbar />
 
       {product && product.images ? (
 
@@ -439,8 +441,8 @@ const ProductView = () => {
       ) : (
         <Loader />
       )}
-
-    </Base>
+  <Footer />
+    </>
   );
 };
 

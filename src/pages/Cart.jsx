@@ -12,9 +12,10 @@ import { Accordion, AccordionBody, AccordionHeader, Input, Option, Select } from
 import cartAPI from '../features/cart/cartAPI';
 import { addNewAdress, calculateTotals, getItems, removeItems, updateItems } from '../features/cart/cartSlice';
 import { toast } from 'react-toastify';
-import Base from '../components/Base';
 import orderAPI from '../features/order/orderAPI';
 import { createOrder } from '../features/order/orderSlice';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Cart = () => {
     const [shipping, setShipping] = useState('Standard Delivery');
@@ -215,7 +216,8 @@ const handleSubmitAddress = async (event) => {
   };
 
   return (
-    <Base title={'cart'}>
+    <>
+    <Navbar />
 <div className='bg-gray-200 pt-10 pb-20'>
 
   {/* Stepper */}
@@ -633,7 +635,8 @@ const handleSubmitAddress = async (event) => {
     </Link>
 </div>
 </div>
-    </Base>
+<Footer />
+    </>
   );
 };
 

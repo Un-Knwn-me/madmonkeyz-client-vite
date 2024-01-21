@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import Base from '../components/Base'
+import React, { useEffect, useState } from 'react';
 import { Breadcrumbs, Button, Typography } from '@material-tailwind/react'
 import { Link } from 'react-router-dom'
 import { FormControl, FormControlLabel, FormLabel, RadioGroup } from '@mui/material'
@@ -11,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { orderHistory } from '../features/order/orderSlice'
 import Loader from '../components/Loader'
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const OrderHistory = () => {
     const [deliveryStatus, setDeliveryStatus] = useState("");
@@ -41,7 +42,8 @@ const fetchOrders = async () => {
   const orderList = useSelector((state) => state.order.orderList);
   
   return (
-    <Base title={'Order History'}>
+    <>
+    <Navbar />
         <div className='my-6 md:my-10 mx-5 md:mx-20'>
 
             {/* Breadvrumbs */}
@@ -259,8 +261,8 @@ const fetchOrders = async () => {
                     </div>
                 </div>
         </div>
-
-    </Base>
+    <Footer />
+    </>
   )
 }
 

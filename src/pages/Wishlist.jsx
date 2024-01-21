@@ -1,10 +1,12 @@
-import React from 'react'
-import Base from '../components/Base'
+import React from 'react';
 import { Button, Card, CardBody, CardFooter, CardHeader, IconButton, Rating, Typography } from '@material-tailwind/react'
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Wishlist = () => {
   return (
-    <Base title={"Wishlist"}>
+    <>
+    <Navbar />
         <div className="mx-20 my-10">
             <p className="text-md font-semibold mb-10">Wishlist</p>
 
@@ -88,7 +90,8 @@ const Wishlist = () => {
             </div>
         
         </div>
-    </Base>
+        <Footer />
+    </>
   )
 }
 

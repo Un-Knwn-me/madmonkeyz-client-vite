@@ -1,168 +1,101 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import React, { useEffect } from 'react';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import { Link } from 'react-router-dom';
-
-const navigation = [
-  { name: 'Men', href: '/men', current: true },
-  { name: 'Team', href: '/team', current: false },
-  { name: 'Projects', href: '/project', current: false },
-  { name: 'Calendar', href: '/calender', current: false },
-]
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function Navbar() {
-  return (
-    <Disclosure as="nav" className="bg-gray-800">
-      {({ open }) => (
-        <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
-                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="absolute -inset-0.5" />
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
-              </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
-                  />
-                </div>
-                <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                
-              <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <FavoriteBorderOutlinedIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-                
-                <Link to={'/cart'}>
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <ShoppingBagOutlinedIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-                </Link>
+  const navigate = useNavigate();
 
-                {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
-                  <div>
-                    <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Your Profile
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Settings
-                          </Link>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <Link
-                            to="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Sign out
-                          </Link>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  // get data
+    const user = useSelector((state) => state.userInfo.userName);
+    const { cartTotalQuantity } = useSelector(state => state.cart);
+
+
+      // Get cart items
+      const fetchCart = async () => {
+        try { 
+          const response = await cartAPI.getItem();
+          
+          if (response.status === 200) {
+            dispatch(getItems(response.data));
+            dispatch(calculateTotals());
+          }
+          
+        } catch (error) {
+          console.error("Error fetching products:", error);
+          toast.error(error.response.data.message);
+        }
+      };
+
+  return (
+    <>
+            {/* Announcement bar */}
+            <div class="flex h-8 bg-cyan-500 text-white flex items-center justify-between">
+        <p class="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
+            Express Delivery
+        </p>
+        <p class="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
+            Signup & get 50% off
+        </p>
+        <p class="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
+            100% pure cotton
+        </p>
+      </div>
+    
+    <nav className="sticky top-0 bg-gray-100 text-black py-4 px-10 w-full z-10">
+      <div className="container mx-auto flex items-center justify-between">
+        {/* Logo */}
+        <div className="text-xl font-bold">
+          <a href="/">Emperor Polo</a>
+        </div>
+
+        {/* Navigation Links */}
+        <div className="hidden md:flex space-x-4">
+          <Link to="/">Home</Link>
+          <Link to="/category">Category</Link>
+          <Link to="/order-history">Orders</Link>
+        </div>
+
+        {/* Navbar icons and search */}
+        <div className="flex space-x-6 items-center">
+          <div className='relative'>
+            <input
+              type="text"
+              placeholder="Search..."
+              className="py-2 px-4 rounded-xs bg-white focus:outline-none focus:shadow-outline w-56"
+            />
+            <div className="absolute top-0 right-0 my-2 mr-4">
+              <SearchOutlinedIcon sx={{ color: "#000000" }}/>
             </div>
           </div>
 
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-            </div>
-          </Disclosure.Panel>
-        </>
-      )}
-    </Disclosure>
-  )
+          <div>
+            <FavoriteBorderOutlinedIcon onClick={()=>navigate('/wishlist')}/>
+          </div>
+          <div className='relative'>
+            <LocalMallOutlinedIcon onClick={()=>navigate('/cart')}/>
+            <div className="absolute bg-cyan-400 rounded-full text-white px-2 top-0 right-0 -mt-2 -mr-4">
+            <span className="text-md">
+              {cartTotalQuantity}
+            </span>
+          </div>
+          </div>
+          <div className='item-center'>
+            <AccountCircleOutlinedIcon sx={{ fontSize: 26 }} />
+          </div>
+          
+        </div>
+
+         
+      </div>
+    </nav>
+    </>
+  );
 }

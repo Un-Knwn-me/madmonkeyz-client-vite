@@ -49,7 +49,7 @@ export default function Navbar() {
         </p>
       </div>
     
-    <nav className="sticky top-0 bg-gray-100 text-black py-4 px-10 w-full z-10">
+    <nav className="sticky top-0 bg-gray-100 text-black py-4 px-5 md:px-10 w-full z-20">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="text-xl font-bold">
@@ -64,30 +64,37 @@ export default function Navbar() {
         </div>
 
         {/* Navbar icons and search */}
-        <div className="flex space-x-6 items-center">
-          <div className='relative'>
+        <div className="flex space-x-4 md:space-x-6 items-center">
+        <div className='item-center md:hidden'>
+            <SearchOutlinedIcon sx={{ fontSize: 26 }} />
+          </div>
+          <div className='hidden md:flex relative'>
             <input
               type="text"
               placeholder="Search..."
               className="py-2 px-4 rounded-xs bg-white focus:outline-none focus:shadow-outline w-56"
             />
-            <div className="absolute top-0 right-0 my-2 mr-4">
+            <div className="absolute top-0 right-0 my-2 mr-4 cursor-pointer">
               <SearchOutlinedIcon sx={{ color: "#000000" }}/>
             </div>
           </div>
 
           <div>
-            <FavoriteBorderOutlinedIcon onClick={()=>navigate('/wishlist')}/>
+            <Link to={'/wishlist'}>
+              <FavoriteBorderOutlinedIcon/>
+            </Link>
           </div>
           <div className='relative'>
-            <LocalMallOutlinedIcon onClick={()=>navigate('/cart')}/>
-            <div className="absolute bg-cyan-400 rounded-full text-white px-2 top-0 right-0 -mt-2 -mr-4">
-            <span className="text-md">
-              {cartTotalQuantity}
-            </span>
+            <Link to={'/cart'}>
+              <LocalMallOutlinedIcon/>
+              <div className="absolute bg-cyan-400 rounded-full text-white px-2 top-0 right-0 -mt-2 -mr-4">
+              <span className="text-md">
+                {cartTotalQuantity}
+              </span>
+              </div>
+            </Link>
           </div>
-          </div>
-          <div className='item-center'>
+          <div className='item-center cursor-pointer'>
             <AccountCircleOutlinedIcon sx={{ fontSize: 26 }} />
           </div>
           

@@ -12,8 +12,8 @@ import {
   TabsHeader,
   Tooltip,
   Typography,
+  Rating,
 } from "@material-tailwind/react";
-import Rating from "../components/Rating";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -188,10 +188,7 @@ const ProductView = () => {
                   {/* Reviews */}
                   <div className="mt-3 mx-2">
                     <h3 className="sr-only">Reviews</h3>
-                    <Rating
-                      value={product.ratings}
-                      text={`${product.numOfReviews} reviews`}
-                    />
+                    <p className='text-gray-600 text-sm font-medium font-red-hat-display leading-tight tracking-tight mt-2'><Rating value={product.ratings} readonly /> <span>{`${product.numOfReviews} reviews`}</span></p>
                   </div>
 
                   {/* Price */}

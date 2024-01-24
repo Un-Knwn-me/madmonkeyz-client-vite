@@ -4,7 +4,7 @@ import React from 'react'
 const LINKS = [
     {
       title: "Product",
-      items: ["Shirts", "Pant", "Hoodies"],
+      items: ["T-Shirts", "Shirts", "Winter Wear", "Pants", "Track Pants", "Shorts"],
     },
     {
       title: "Company",

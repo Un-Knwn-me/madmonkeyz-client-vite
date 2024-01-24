@@ -173,7 +173,7 @@ const Home = () => {
         {/* Coupons */}
         <div className='mt-30 mb-20 text-2xl font-medium text-blue-800 text-center font-times-new-roman'>COUPON ZONE</div>
 
-        <div className='columns-2 flex m-10 md:m-20'>
+        <div className='grid-cols-1 items-center md:grid-cols-2 gap-x-10 flex m-10 md:m-20'>
             <div className='w-fit relative mx-20'>
                 <img
                     className="object-fit object-center"
@@ -213,7 +213,7 @@ const Home = () => {
         {/* Category */}
         <div className='mt-30 mb-20 text-2xl font-medium text-blue-800 text-center font-times-new-roman'>SHOP BY CATEGORY</div>
 
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-auto m-10 md:my-20 md:mx-30'>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-10 m-10 md:my-20 md:mx-30'>
     <div className="w-60 h-80 relative shadow border-8 border-green-600 bg-green-600">
             <div className="w-56 h-52">
                 <img

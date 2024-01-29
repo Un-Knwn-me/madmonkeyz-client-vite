@@ -73,14 +73,14 @@ const Base = ({title, description, children}) => {
       <>
       <div className="w-full">
         {/* Announcement bar */}
-      <div class="flex h-8 bg-cyan-500 text-white flex items-center justify-between">
-        <p class="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
+      <div className="flex h-8 bg-cyan-500 text-white flex items-center justify-between">
+        <p className="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
             Express Delivery
         </p>
-        <p class="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
+        <p className="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
             Signup & get 50% off
         </p>
-        <p class="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
+        <p className="uppercase text-xs font-bold leading-tight tracking-tight text-center w-1/3">
             100% pure cotton
         </p>
       </div>

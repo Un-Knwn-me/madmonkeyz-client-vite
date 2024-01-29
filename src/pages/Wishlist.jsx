@@ -8,7 +8,7 @@ const Wishlist = () => {
   return (
     <>
     <Navbar />
-        <div className="mx-20 my-10">
+        <div className="mx-30 my-10">
             <p className="text-md font-semibold mb-10">Wishlist</p>
 
             {/* Wishlist */}
@@ -26,7 +26,7 @@ const Wishlist = () => {
                     </div>
                     <div className='mx-4 my-3'>
                         <p className='text-black text-lg font-semibold font-red-hat-display leading-tight tracking-tight'>Emperor Polo T-Shirt</p>
-                        <p className='text-gray-600 text-sm font-medium font-red-hat-display leading-tight tracking-tight mt-2'>Cotton Regular fit</p>
+                        <p className='text-gray-600 text-sm font-medium font-red-hat-display leading-tight tracking-tight mt-1'>Cotton Regular fit</p>
                         <div className='columns-2 mt-2'>
                             <p className='text-gray-600 text-sm font-medium font-red-hat-display leading-tight tracking-tight'>Color: </p>
                             <p className='text-gray-600 text-sm font-medium font-red-hat-display leading-tight tracking-tight'>Size: </p>

@@ -215,11 +215,11 @@ const fetchOrders = async () => {
                             <div className='mt-2'>
                                 <div className='text-base font-medium'>₹ {order.totalAmount}</div>
                                 <div className='text-sm font-normal text-gray-600 mt-1'>Payment method:</div>
-                                <div className='text-xs font-normal text-gray-800'>UPI</div>
+                                <div className='text-xs font-normal text-gray-800'>{order.paymentDetails.paymentMethod}</div>
                                 {(order.paymentDetails.paymentStatus === 'Completed') ? 
                                     <div className='text-sm font-medium text-green-600 mt-4'>Payment Successfull</div>
-                                : (order.paymentDetails.paymentStatus === 'Pending') ? 
-                                    <div className='text-sm font-medium text-orange-500 mt-4'>Payment Pending</div>
+                                : (order.paymentDetails.paymentStatus === 'Pending' || order.paymentDetails.paymentStatus === 'Cancelled') ? 
+                                    <div className='text-sm font-medium text-orange-500 mt-4'>Payment {order.paymentDetails.paymentStatus}</div>
                                 : <div className='text-sm font-medium text-red-600 mt-4'>Payment Failed</div>
                                 }
                             </div>

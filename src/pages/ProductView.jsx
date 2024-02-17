@@ -17,17 +17,23 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import cartAPI from "../features/cart/cartAPI";
-import { addItems, calculateTotals, getItems } from "../features/cart/cartSlice";
+import {
+  addItems,
+  calculateTotals,
+  getItems,
+} from "../features/cart/cartSlice";
 import { toast } from "react-toastify";
 import productAPI from "../features/product/productAPI";
 import { productInfo } from "../features/product/productSlice";
 import CalculateOfferPercentage from "../components/CalculateOfferPercentage";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
+import userAPI from "../features/user/userAPI";
+import { manageWishlist } from "../features/user/userSlice";
 
 const theme = {
   tabsHeader: {
@@ -58,23 +64,24 @@ const ProductView = () => {
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const [selectedVariant, setSelectedVariant] = useState(null);
-  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedSize, setSelectedSize] = useState("");
   const [bag, setBag] = useState(0);
 
   // Get productdetails
   const fetchProductDetails = async (id) => {
-    try { 
-      const response = await productAPI.getProductInfo(id);
+    try {
+      const userId = localStorage.getItem("userId") || "";
+      const response = await productAPI.getProductInfo(id, userId);
 
       if (response.status === 200) {
         dispatch(productInfo(response.data));
-      }      
+      }
     } catch (error) {
       console.error("Error fetching products:", error);
       toast.error(error.response.data.message);
     }
   };
-  
+
   useEffect(() => {
     fetchProductDetails(id);
   }, [id]);
@@ -82,25 +89,32 @@ const ProductView = () => {
   // getting product details from state
   const product = useSelector((state) => state.products.productDetails);
 
-    // Set quantity
-    const decreaseQuantity = () => {
-      if (qty > 1) {
-        setQty(qty - 1);
-      }
-    };
-  
-    const increaseQuantity = (variantId) => {
-      const variant = product.varients.find((e) => e._id === variantId);
-      if (qty < variant.stock) {
+  // Set quantity
+  const decreaseQuantity = () => {
+    if (qty > 1) {
+      setQty(qty - 1);
+    }
+  };
+
+  const increaseQuantity = (variantId) => {
+    const variant = product.varients.find((e) => e._id === variantId);
+    if (qty < variant.stock) {
       setQty(qty + 1);
-      }
-    };
+    }
+  };
 
   // handle add to cart
   const handleAddToCart = async (e) => {
-      e.preventDefault();
+    e.preventDefault();
     try {
-      const response = await cartAPI.addItem(product._id, qty, product.salesPrice, product.price, selectedVariant, selectedSize);
+      const response = await cartAPI.addItem(
+        product._id,
+        qty,
+        product.salesPrice,
+        product.price,
+        selectedVariant,
+        selectedSize
+      );
       if (response.status === 200) {
         dispatch(addItems(response.data));
         fetchCart();
@@ -114,28 +128,49 @@ const ProductView = () => {
     }
   };
 
-      // Get cart items
-      const fetchCart = async () => {
-        try { 
-          const response = await cartAPI.getItem();
-          
-          if (response.status === 200) {
-            dispatch(getItems(response.data));
-            dispatch(calculateTotals());
-          }
-          
-        } catch (error) {
-          console.error("Error fetching products:", error);
-          toast.error(error.response.data.message);
-        }
-      };
+  // Get cart items
+  const fetchCart = async () => {
+    try {
+      const response = await cartAPI.getItem();
+
+      if (response.status === 200) {
+        dispatch(getItems(response.data));
+        dispatch(calculateTotals());
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  // manage wishlist
+  const handleWishlist = async (e, productId) => {
+    e.preventDefault();
+    try {
+      const response = await userAPI.addWishlist(
+        productId,
+        selectedVariant,
+        selectedSize
+      );
+
+      if (response.status === 200) {
+        fetchProductDetails(id);
+        dispatch(manageWishlist(response.data));
+        toast.success(response.data.message);
+      } else {
+        toast.warning(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error managing wishlist:", error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   return (
     <>
-    <Navbar />
+      <Navbar />
 
       {product && product.images ? (
-
         <div className="my-5 md:my-10">
           {/* navigation */}
           <div className="m-2 md:mx-10 md:m-5">
@@ -181,14 +216,17 @@ const ProductView = () => {
                     {product.brandName} - {product.productName}
                   </h1>
 
-                  <p className="m-2 text-gray-600">
+                  <div className="m-2 text-gray-600">
                     {product.productType} {product.category}
-                  </p>
+                  </div>
 
                   {/* Reviews */}
                   <div className="mt-3 mx-2">
                     <h3 className="sr-only">Reviews</h3>
-                    <p className='text-gray-600 text-sm font-medium font-red-hat-display leading-tight tracking-tight mt-2'><Rating value={product.ratings} readonly /> <span>{`${product.numOfReviews} reviews`}</span></p>
+                    <div className="text-gray-600 text-sm font-medium font-red-hat-display leading-tight tracking-tight mt-2">
+                      <Rating value={product.ratings} readonly />{" "}
+                      <span>{`${product.numOfReviews} reviews`}</span>
+                    </div>
                   </div>
 
                   {/* Price */}
@@ -202,12 +240,16 @@ const ProductView = () => {
                         ₹ {product.price}
                       </span>
                       <span className="text-red-600">
-                      <CalculateOfferPercentage originalPrice={product.price} discountedPrice={product.salesPrice}/>% off
+                        <CalculateOfferPercentage
+                          originalPrice={product.price}
+                          discountedPrice={product.salesPrice}
+                        />
+                        % off
                       </span>
                     </h1>
-                    <p className="font-light text-xs text-gray-600">
+                    <div className="font-light text-xs text-gray-600">
                       Includes all taxes & GST
-                    </p>
+                    </div>
                   </div>
 
                   {/* Colors */}
@@ -233,80 +275,87 @@ const ProductView = () => {
                         Size guide
                       </Link>
                     </div>
-                    
-                  
 
-                  <Tabs className="mt-3" value=''>
-                    <TabsHeader theme={theme}>
-                      {product.varients.map(({ size, stock, _id }) => (
-                        <Tab key={_id} value={_id} onClick={() => {
-                          setSelectedVariant(_id);
-                          setSelectedSize(size);
-                          setQty(1);
-                          setBag(stock);
-                        }} >
-                          {size}
-                        </Tab>
-                      ))}
-                    </TabsHeader>
-                    <TabsBody>
-                      {product.varients.map((variant) => (
-                        <TabPanel key={variant._id} value={variant._id}>
-                          {/* status */}
-                          <div className="mt-8 mx-5">
-                                  <div className="flex items-center justify-start">
-                                    <h3 className="text-md font-medium text-gray-900">
-                                      Status: 
-                                    </h3>
-                                    <div className="inline-block ml-3">
-                                      <Chip
-                                        variant="gradient"
-                                        color={variant.stock > 0 ? "green" : "red"}
-                                        value={
-                                          variant.stock > 0 ? `In Stock` : "Out of Stock"
-                                        }
-                                      />
-                                    </div>
-                                  </div>
+                    <Tabs className="mt-3" value="">
+                      <TabsHeader theme={theme}>
+                        {product.varients.map(({ size, stock, _id }) => (
+                          <Tab
+                            key={_id}
+                            value={_id}
+                            onClick={() => {
+                              setSelectedVariant(_id);
+                              setSelectedSize(size);
+                              setQty(1);
+                              setBag(stock);
+                            }}
+                          >
+                            {size}
+                          </Tab>
+                        ))}
+                      </TabsHeader>
+                      <TabsBody>
+                        {product.varients.map((variant) => (
+                          <TabPanel key={variant._id} value={variant._id}>
+                            {/* status */}
+                            <div className="mt-8 mx-5">
+                              <div className="flex items-center justify-start">
+                                <h3 className="text-md font-medium text-gray-900">
+                                  Status:
+                                </h3>
+                                <div className="inline-block ml-3">
+                                  <Chip
+                                    variant="gradient"
+                                    color={variant.stock > 0 ? "green" : "red"}
+                                    value={
+                                      variant.stock > 0
+                                        ? `In Stock`
+                                        : "Out of Stock"
+                                    }
+                                  />
                                 </div>
+                              </div>
+                            </div>
 
                             {/* Quantity */}
-                            {variant.stock > 0 ? 
-                            <div className="mt-8 mx-5">
-                                  <div className="flex items-center justify-start">
-                                    <h3 className="text-md font-medium text-gray-900">
-                                      Quantity:
-                                    </h3>
-                                  </div>
-                                  <div className="flex items-center m-3 space-x-4">
-                                    <Button
-                                      size="sm"
-                                      onClick={() => decreaseQuantity()}
-                                      className="px-2 py-1 bg-gray-200 text-gray-900 rounded"
-                                    >
-                                      <RemoveIcon />
-                                    </Button>
-                                    <span>{qty}</span>
-                                    <Button
-                                      size="sm"
-                                      onClick={() => increaseQuantity(variant._id)}
-                                      className="px-2 py-1 bg-gray-200 text-gray-900 rounded"
-                                    >
-                                      <AddIcon />
-                                    </Button>
-                                  </div>
+                            {variant.stock > 0 ? (
+                              <div className="mt-8 mx-5">
+                                <div className="flex items-center justify-start">
+                                  <h3 className="text-md font-medium text-gray-900">
+                                    Quantity:
+                                  </h3>
                                 </div>
-                                : " " }
-                        </TabPanel>
-                      ))}
-                    </TabsBody>
-                  </Tabs>
+                                <div className="flex items-center m-3 space-x-4">
+                                  <Button
+                                    size="sm"
+                                    onClick={() => decreaseQuantity()}
+                                    className="px-2 py-1 bg-gray-200 text-gray-900 rounded"
+                                  >
+                                    <RemoveIcon />
+                                  </Button>
+                                  <span>{qty}</span>
+                                  <Button
+                                    size="sm"
+                                    onClick={() =>
+                                      increaseQuantity(variant._id)
+                                    }
+                                    className="px-2 py-1 bg-gray-200 text-gray-900 rounded"
+                                  >
+                                    <AddIcon />
+                                  </Button>
+                                </div>
+                              </div>
+                            ) : (
+                              " "
+                            )}
+                          </TabPanel>
+                        ))}
+                      </TabsBody>
+                    </Tabs>
+                  </div>
 
-    </div>
-
-                  <p className="font-light text-xs mt-10 text-gray-600 text-center">
+                  <div className="font-light text-xs mt-10 text-gray-600 text-center">
                     2days return & replace policy applicable to this product
-                  </p>
+                  </div>
 
                   {/* Add to cart */}
                   <div className="mt-3 mx-5 grid grid-cols-12 gap-5">
@@ -314,9 +363,18 @@ const ProductView = () => {
                     <div className="h-fit col-span-2">
                       <div className="group inline-flex flex-wrap items-center gap-3">
                         <Tooltip content="Whislist">
-                          <span className="cursor-pointer text-left rounded-full border border-gray-900/5 bg-gray-900/5 p-3 text-gray-900 transition-colors hover:border-gray-900/10 hover:bg-gray-900/10 hover:!opacity-100 group-hover:opacity-70">
-                            <FavoriteIcon className="text-red-800" />
-                          </span>
+                          <button className="text-gray-700 bg-gray-100 rounded-full p-2.5 hover:text-black">
+                            {product.isWishlist ? (
+                              <FavoriteIcon
+                                sx={{ color: "#FF0000" }}
+                                onClick={(e) => handleWishlist(e, product._id)}
+                              />
+                            ) : (
+                              <FavoriteBorderOutlinedIcon
+                                onClick={(e) => handleWishlist(e, product._id)}
+                              />
+                            )}
+                          </button>
                         </Tooltip>
                       </div>
                     </div>
@@ -438,7 +496,7 @@ const ProductView = () => {
       ) : (
         <Loader />
       )}
-  <Footer />
+      <Footer />
     </>
   );
 };

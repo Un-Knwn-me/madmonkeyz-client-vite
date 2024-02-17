@@ -18,9 +18,9 @@ const productAPI = {
       return error.response;
     }
   },
-  listProducts: async (sortBy) => {
+  listProducts: async (sortBy, userId) => {
     try {
-      const response = await axios.get(`${Backend_URL}/product/list?sortBy=${sortBy}`, {
+      const response = await axios.get(`${Backend_URL}/product/list?sortBy=${sortBy}&userId=${userId}`, {
         headers: {
             Authorization: `Bearer ${getAuthToken()}`,
           },
@@ -30,9 +30,9 @@ const productAPI = {
       return error.response;
     }
   },
-  getProductInfo: async (productId) => {
+  getProductInfo: async (productId, userId) => {
     try {
-      const response = await axios.get(`${Backend_URL}/product/${productId}`, {
+      const response = await axios.get(`${Backend_URL}/product/${productId}?userId=${userId}`, {
         headers: {
             Authorization: `Bearer ${getAuthToken()}`,
           },

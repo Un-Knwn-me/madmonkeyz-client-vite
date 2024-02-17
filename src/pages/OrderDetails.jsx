@@ -29,19 +29,19 @@ const OrderDetails = () => {
       const response = await orderAPI.getOrderInfo(orderId);
       
       if (response.status === 200) {
-        dispatch(orderInfo(response.data));
+         dispatch(orderInfo(response.data));
 
          if(response.data.orderInfo.deliveryStatus === "Confirmed") {
           setActStep(1)
          }  else if(response.data.orderInfo.deliveryStatus === "Dispatched") {
           setActStep(2)
-         } else if(response.data.orderInfo.deliveryStatus === "Shipped"){
+         } else if(response.data.orderInfo.deliveryStatus === "On the way"){
           setActStep(3)
          } else if(response.data.orderInfo.deliveryStatus === "Delivered"){
           setActStep(4)
          }
       }  else {
-        toast.warning(response.message)
+        toast.warning(response.data.message)
       }    
     } catch (error) {
       console.error("Error fetching products:", error);

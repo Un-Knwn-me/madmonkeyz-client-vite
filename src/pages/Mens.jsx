@@ -5,11 +5,16 @@ import Loader from "../components/Loader";
 import { Button, Option, Select, Typography } from "@material-tailwind/react";
 import { Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { FormControl, FormControlLabel, FormLabel, RadioGroup, } from "@mui/material";
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  RadioGroup,
+} from "@mui/material";
 import BpRadio from "../components/SizeCheckBox.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import productAPI from "../features/product/productAPI.jsx";
-import { listProducts } from '../features/product/productSlice.jsx';
+import { listProducts } from "../features/product/productSlice.jsx";
 import cartAPI from "../features/cart/cartAPI.jsx";
 import { calculateTotals, getItems } from "../features/cart/cartSlice.jsx";
 import { Link } from "react-router-dom";
@@ -32,44 +37,43 @@ const Mens = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
-// Get products
-const fetchProducts = async () => {
-  try { 
-    const response = await productAPI.listProducts(sortBy);
-    
-    if (response.status === 200) {
-      setFilteredProducts(response.data);
-      dispatch(listProducts(response.data));
-    }
-    
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    toast.error(error.response.data.message);
-  }
-};
+  // Get products
+  const fetchProducts = async () => {
+    try {
+      const userId = localStorage.getItem("userId") || "";
+      const response = await productAPI.listProducts(sortBy, userId);
 
-    // Get cart items
-    const fetchCart = async () => {
-      try { 
-        const response = await cartAPI.getItem();
-        
-        if (response.status === 200) {
-          dispatch(getItems(response.data));
-          dispatch(calculateTotals());
-        }
-        
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        toast.error(error.response.data.message);
+      if (response.status === 200) {
+        setFilteredProducts(response.data);
+        dispatch(listProducts(response.data));
       }
-    };
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      toast.error(error.response.data.message);
+    }
+  };
 
-useEffect(() => {
-  fetchProducts();
-  fetchCart();
-}, [sortBy]);
+  // Get cart items
+  const fetchCart = async () => {
+    try {
+      const response = await cartAPI.getItem();
 
-const productlist = useSelector((state) => state.productList);
+      if (response.status === 200) {
+        dispatch(getItems(response.data));
+        dispatch(calculateTotals());
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+    fetchCart();
+  }, []);
+
+  const productlist = useSelector((state) => state.productList);
 
   // handle filter
   const handleFilterChange = () => {
@@ -88,7 +92,7 @@ const productlist = useSelector((state) => state.productList);
 
   return (
     <>
-    <Navbar />
+      <Navbar />
 
       {/* Banner */}
       <div
@@ -105,7 +109,7 @@ const productlist = useSelector((state) => state.productList);
       {/* Content */}
 
       <div className="flex justify-center antialiased md:mx-10 my-10">
-        <p className="text-2xl font-semibold">Apparel for Mens</p>
+        <div className="text-2xl font-semibold">Apparel for Mens</div>
       </div>
 
       {/* Sidebar */}
@@ -319,7 +323,7 @@ const productlist = useSelector((state) => state.productList);
         </div>
       </Dialog>
 
-      <div className="grid grid-cols-12 gap-4 mt-10 mb-20">
+      <div className="grid grid-cols-12 gap-4 mx-10 mt-10 mb-20">
         {/* Left column for filter */}
         <div className="h-fit col-span-3 p-5 hidden md:block">
           <div className="flex justify-between">
@@ -541,7 +545,10 @@ const productlist = useSelector((state) => state.productList);
                   >
                     Newest
                   </Option>
-                  <Option value="oldestFirst" className="flex items-center gap-2">
+                  <Option
+                    value="oldestFirst"
+                    className="flex items-center gap-2"
+                  >
                     Oldest
                   </Option>
                   <Option value="highToLow" className="flex items-center gap-2">
@@ -552,7 +559,6 @@ const productlist = useSelector((state) => state.productList);
                   </Option>
                 </Select>
               </div>
-
             </div>
           </div>
 
@@ -561,9 +567,11 @@ const productlist = useSelector((state) => state.productList);
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-auto">
               {filteredProducts.map((product, key) => (
-                <Link to={`/category/${product._id}`} key={product._id} >
-                <ProductCard product={product} />
-                </Link>
+                <div key={product._id}>
+                  <Link to={`/category/${product._id}`} >
+                    <ProductCard product={product} />
+                  </Link>
+                </div>
               ))}
             </div>
           )}
